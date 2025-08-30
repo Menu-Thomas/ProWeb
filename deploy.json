@@ -1,0 +1,7 @@
+{
+  "scripts": {
+    "deploy:netlify": "npm run build && echo 'Build terminé. Prêt pour déploiement Netlify!'",
+    "deploy:vercel": "npm run build && echo 'Build terminé. Prêt pour déploiement Vercel!'",
+    "check": "npm run lint && npm run build"
+  }
+}
