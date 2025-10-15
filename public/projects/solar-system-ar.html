@@ -3,114 +3,347 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solar System AR - Application Éducative Réalité Augmentée</title>
-    <link rel="stylesheet" href="project-styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Solar System AR - Application Éducative Réalité Augmentée | Thomas Menu</title>
+    <meta name="description" content="Solar System AR : Application éducative de réalité augmentée pour visualiser les vraies échelles du système solaire avec Unity, ARCore et ARKit.">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        .ar-demo {
-            display: inline-block;
-            background: linear-gradient(135deg, #ff6b6b 0%, #ffa726 100%);
-            color: white;
-            padding: 12px 24px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            margin: 10px 5px;
-            transition: all 0.3s ease;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        .ar-demo:hover {
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .project-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #3b82f6, #2563eb, #1d4ed8);
+        }
+
+        .project-title {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .project-subtitle {
+            font-size: 1.3rem;
+            color: #666;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        .company-badge {
+            background: linear-gradient(135deg, #ff6b6b, #ffa726);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 500;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .demo-links {
+            margin-top: 20px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .demo-link {
+            background: linear-gradient(135deg, #ff6b6b, #ffa726);
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .demo-link:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 20px rgba(255, 107, 107, 0.3);
         }
-        .visualization-grid {
+
+        .content-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        .content-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .content-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-icon {
+            background: linear-gradient(135deg, #ff6b6b, #ffa726);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .section-content p {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: #475569;
+            line-height: 1.8;
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
             margin: 25px 0;
         }
-        .visualization-card {
-            background: rgba(255,255,255,0.05);
-            border-radius: 15px;
-            padding: 25px;
-            border: 1px solid rgba(255,255,255,0.1);
+
+        .spec-card {
+            background: rgba(255, 107, 107, 0.05);
+            border: 1px solid rgba(255, 107, 107, 0.1);
+            border-radius: 12px;
+            padding: 20px;
             transition: all 0.3s ease;
         }
-        .visualization-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+
+        .spec-card:hover {
+            background: rgba(255, 107, 107, 0.08);
+            transform: translateY(-2px);
         }
-        .visualization-card h4 {
-            color: #ff6b6b;
-            margin-bottom: 15px;
+
+        .spec-card h4 {
+            color: #1e293b;
+            margin-bottom: 10px;
+            font-weight: 600;
             display: flex;
             align-items: center;
             gap: 10px;
         }
-        .educational-features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
+
+        .spec-card p {
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+
+        .features-list {
             margin: 20px 0;
         }
-        .educational-feature {
-            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(255, 167, 38, 0.1));
-            padding: 20px;
-            border-radius: 12px;
-            border-left: 4px solid #ff6b6b;
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
         }
-        .tech-ar {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ffa726 100%);
+
+        .feature-item:last-child {
+            border-bottom: none;
+        }
+
+        .feature-item i {
+            color: #ff6b6b;
+            font-size: 1.2rem;
+            width: 20px;
+            text-align: center;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .tech-tag {
+            background: linear-gradient(135deg, #ff6b6b, #ffa726);
             color: white;
             padding: 8px 16px;
             border-radius: 20px;
             font-size: 0.9rem;
             font-weight: 500;
-            margin: 5px;
-            display: inline-block;
         }
-        .phenomenon-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin: 20px 0;
+
+        .image-frame {
+            margin: 25px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
-        .phenomenon-item {
-            background: rgba(255, 107, 107, 0.1);
-            padding: 15px;
-            border-radius: 10px;
+
+        .main-project-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .image-placeholder-large {
+            background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #64748b;
+        }
+
+        .image-caption {
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px 15px;
+            font-size: 0.9rem;
             text-align: center;
-            border: 1px solid rgba(255, 107, 107, 0.2);
+        }
+
+        .clickable-image {
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .clickable-image:hover {
+            transform: scale(1.02);
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            text-decoration: none;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 12px 20px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(-5px);
+        }
+
+        @media (max-width: 768px) {
+            .project-title {
+                font-size: 2rem;
+                flex-direction: column;
+            }
+            
+            .specs-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .demo-links {
+                flex-direction: column;
+                align-items: center;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <header class="project-header">
-            <a href="../src/app/projets/page.tsx" class="back-btn">
-                <i class="fas fa-arrow-left"></i>
-                Retour aux projets
-            </a>
-            
-            <div class="project-hero">
-                <div class="hero-content">
-                    <div class="project-category">
-                        <i class="fas fa-mobile-alt"></i>
-                        Projet Mobile AR
-                    </div>
-                    <h1 class="project-title">Solar System AR</h1>
-                    <p class="project-subtitle">Application éducative de réalité augmentée pour visualiser les vraies échelles du système solaire</p>
-                    
-                    <div class="demo-links">
-                        <a href="#" class="ar-demo">
-                            <i class="fas fa-cube"></i> Démo AR (iOS/Android)
-                        </a>
-                        <a href="#" class="ar-demo">
-                            <i class="fab fa-github"></i> Code Source
-                        </a>
-                    </div>
-                </div>
+        <a href="../projets/" class="back-button">
+            <i class="fas fa-arrow-left"></i>
+            Retour aux projets
+        </a>
 
-                <div class="hero-image">
+        <header class="project-header">
+            <h1 class="project-title">
+                <i class="fas fa-globe"></i>
+                Solar System AR
+            </h1>
+            <p class="project-subtitle">Application éducative de réalité augmentée pour visualiser les vraies échelles du système solaire</p>
+            <div class="company-badge">Projet Éducatif</div>
+            
+            <div class="demo-links">
+                <a href="#" class="demo-link">
+                    <i class="fas fa-cube"></i>
+                    Démo AR (iOS/Android)
+                </a>
+                <a href="#" class="demo-link">
+                    <i class="fab fa-github"></i>
+                    Code Source
+                </a>
+            </div>
+        </header>
+
+        <div class="content-grid">
+            <!-- Vue d'ensemble -->
+            <div class="content-section">
+                <h2 class="section-title">
+                    <div class="section-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    Concept éducatif
+                </h2>
+                <div class="section-content">
+                    <p>
+                        Application mobile de réalité augmentée révolutionnaire permettant de visualiser les <strong>vraies échelles de grandeur du système solaire</strong> sur n'importe quel smartphone. L'objectif est de rendre tangibles les concepts astronomiques abstraits en proposant des visualisations proportionnelles réelles et des animations éducatives immersives.
+                    </p>
+                    
                     <div class="image-frame">
                         <img src="../images/images anciens portfolio/solar.jpg" alt="Solar System AR Interface" class="main-project-image clickable-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                         <div class="image-placeholder-large" style="display: none;">
@@ -119,44 +352,11 @@
                             <p>Visualisation éducative en réalité augmentée</p>
                         </div>
                     </div>
-                </div>
-            </div>
-        </header>
-
-        <main class="project-content">
-            <!-- Concept éducatif -->
-            <div class="content-section">
-                <h2 class="section-title">
-                    <div class="section-icon">
-                        <i class="fas fa-graduation-cap"></i>
-                    </div>
-                    Concept éducatif
-                </h2>
-                <p style="margin-bottom: 20px; font-size: 1.1rem; line-height: 1.8;">
-                    Application mobile de réalité augmentée révolutionnaire permettant de visualiser les <strong>vraies échelles de grandeur du système solaire</strong> sur n'importe quel smartphone. L'objectif est de rendre tangibles les concepts astronomiques abstraits en proposant des visualisations proportionnelles réelles et des animations éducatives immersives.
-                </p>
-                
-                <div class="educational-features">
-                    <div class="educational-feature">
-                        <h4><i class="fas fa-ruler"></i> Échelles réelles</h4>
-                        <p>Proportions authentiques des distances et diamètres planétaires</p>
-                    </div>
-                    <div class="educational-feature">
-                        <h4><i class="fas fa-eye"></i> Visualisation AR</h4>
-                        <p>Planètes 3D superposées dans l'environnement réel</p>
-                    </div>
-                    <div class="educational-feature">
-                        <h4><i class="fas fa-play-circle"></i> Animations dynamiques</h4>
-                        <p>Mouvements orbitaux et phénomènes astronomiques en temps réel</p>
-                    </div>
-                    <div class="educational-feature">
-                        <h4><i class="fas fa-universal-access"></i> Accessible</h4>
-                        <p>Compatible tout smartphone iOS/Android moderne</p>
-                    </div>
+                    <div class="image-caption">Interface AR montrant les planètes du système solaire avec échelles réelles</div>
                 </div>
             </div>
 
-            <!-- Modes de visualisation -->
+            <!-- Modes de visualisation AR -->
             <div class="content-section">
                 <h2 class="section-title">
                     <div class="section-icon">
@@ -164,45 +364,27 @@
                     </div>
                     Modes de visualisation AR
                 </h2>
-                
-                <div class="visualization-grid">
-                    <div class="visualization-card">
-                        <h4><i class="fas fa-ruler-horizontal"></i> Distances proportionnelles</h4>
-                        <p>Visualisation des distances réelles entre les planètes à l'échelle. Permet de comprendre l'immensité de l'espace et les vrais rapports de distance dans le système solaire.</p>
-                        <div class="specs-list">
-                            <span>• Échelle distance authentique</span>
-                            <span>• Navigation interactive 3D</span>
-                            <span>• Marqueurs de référence</span>
-                        </div>
-                    </div>
+                <div class="section-content">
+                    <p>
+                        Quatre modes de visualisation distincts pour explorer différents aspects du système solaire avec des échelles et perspectives adaptées à chaque phénomène astronomique.
+                    </p>
                     
-                    <div class="visualization-card">
-                        <h4><i class="fas fa-circle"></i> Diamètres planétaires 3D</h4>
-                        <p>Comparaison directe des tailles réelles des planètes en 3D AR. Visualisation frappante des différences de diamètre souvent sous-estimées.</p>
-                        <div class="specs-list">
-                            <span>• Modèles 3D haute résolution</span>
-                            <span>• Textures planétaires réalistes</span>
-                            <span>• Comparaisons côte à côte</span>
+                    <div class="specs-grid">
+                        <div class="spec-card">
+                            <h4><i class="fas fa-ruler-horizontal" style="color: #ff6b6b;"></i> Distances proportionnelles</h4>
+                            <p>Visualisation des distances réelles entre planètes pour comprendre l'immensité de l'espace</p>
                         </div>
-                    </div>
-                    
-                    <div class="visualization-card">
-                        <h4><i class="fas fa-sync-alt"></i> Mouvements orbitaux</h4>
-                        <p>Animations des révolutions planétaires et du mouvement du système solaire dans la galaxie. Compréhension des dynamiques gravitationnelles.</p>
-                        <div class="specs-list">
-                            <span>• Orbites temps réel</span>
-                            <span>• Vitesses orbitales réelles</span>
-                            <span>• Trajectoire galactique</span>
+                        <div class="spec-card">
+                            <h4><i class="fas fa-circle" style="color: #ff6b6b;"></i> Diamètres planétaires 3D</h4>
+                            <p>Comparaison directe des tailles réelles avec modèles haute résolution</p>
                         </div>
-                    </div>
-                    
-                    <div class="visualization-card">
-                        <h4><i class="fas fa-sun"></i> Système Terre-Lune-Soleil</h4>
-                        <p>Mode spécialisé montrant les positions réelles et effets lumineux pour comprendre les éclipses, cycles lunaires et phénomènes liés.</p>
-                        <div class="specs-list">
-                            <span>• Éclairage solaire réaliste</span>
-                            <span>• Phases lunaires dynamiques</span>
-                            <span>• Simulation éclipses</span>
+                        <div class="spec-card">
+                            <h4><i class="fas fa-sync-alt" style="color: #ff6b6b;"></i> Mouvements orbitaux</h4>
+                            <p>Animations des révolutions et trajectoire du système dans la galaxie</p>
+                        </div>
+                        <div class="spec-card">
+                            <h4><i class="fas fa-sun" style="color: #ff6b6b;"></i> Système Terre-Lune-Soleil</h4>
+                            <p>Simulation éclipses, phases lunaires et phénomènes astronomiques</p>
                         </div>
                     </div>
                 </div>
@@ -216,41 +398,36 @@
                     </div>
                     Phénomènes astronomiques simulés
                 </h2>
-                
-                <p style="margin-bottom: 20px; font-size: 1.1rem; line-height: 1.8;">
-                    Le mode Terre-Lune-Soleil offre une simulation précise des positions réelles et des effets lumineux pour comprendre les phénomènes astronomiques complexes de manière intuitive et visuelle.
-                </p>
+                <div class="section-content">
+                    <p>
+                        Le mode Terre-Lune-Soleil offre une simulation précise des positions réelles et des effets lumineux pour comprendre les phénomènes astronomiques complexes de manière intuitive.
+                    </p>
 
-                <div class="phenomenon-list">
-                    <div class="phenomenon-item">
-                        <i class="fas fa-adjust" style="font-size: 2rem; color: #ff6b6b; margin-bottom: 10px;"></i>
-                        <h4>Éclipses solaires</h4>
-                        <p>Alignement Terre-Lune-Soleil</p>
-                    </div>
-                    <div class="phenomenon-item">
-                        <i class="fas fa-moon" style="font-size: 2rem; color: #ff6b6b; margin-bottom: 10px;"></i>
-                        <h4>Éclipses lunaires</h4>
-                        <p>Ombre de la Terre sur la Lune</p>
-                    </div>
-                    <div class="phenomenon-item">
-                        <i class="fas fa-circle-notch" style="font-size: 2rem; color: #ff6b6b; margin-bottom: 10px;"></i>
-                        <h4>Cycles lunaires</h4>
-                        <p>Phases de la Lune expliquées</p>
-                    </div>
-                    <div class="phenomenon-item">
-                        <i class="fas fa-calendar-alt" style="font-size: 2rem; color: #ff6b6b; margin-bottom: 10px;"></i>
-                        <h4>Saisons terrestres</h4>
-                        <p>Inclinaison et éclairage solaire</p>
-                    </div>
-                    <div class="phenomenon-item">
-                        <i class="fas fa-clock" style="font-size: 2rem; color: #ff6b6b; margin-bottom: 10px;"></i>
-                        <h4>Jour et nuit</h4>
-                        <p>Rotation terrestre et illumination</p>
-                    </div>
-                    <div class="phenomenon-item">
-                        <i class="fas fa-water" style="font-size: 2rem; color: #ff6b6b; margin-bottom: 10px;"></i>
-                        <h4>Marées</h4>
-                        <p>Attraction gravitationnelle lunaire</p>
+                    <div class="features-list">
+                        <div class="feature-item">
+                            <i class="fas fa-adjust"></i>
+                            <span><strong>Éclipses solaires :</strong> Alignement Terre-Lune-Soleil avec ombres réalistes</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-moon"></i>
+                            <span><strong>Éclipses lunaires :</strong> Ombre de la Terre projetée sur la Lune</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-circle-notch"></i>
+                            <span><strong>Cycles lunaires :</strong> Phases de la Lune expliquées en temps réel</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-calendar-alt"></i>
+                            <span><strong>Saisons terrestres :</strong> Inclinaison et éclairage solaire variable</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-clock"></i>
+                            <span><strong>Jour et nuit :</strong> Rotation terrestre et zones d'illumination</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-water"></i>
+                            <span><strong>Marées :</strong> Attraction gravitationnelle lunaire visualisée</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -263,48 +440,43 @@
                     </div>
                     Technologies de réalité augmentée
                 </h2>
-                
-                <div class="tech-stack">
-                    <span class="tech-ar"><i class="fab fa-unity"></i> Unity 3D</span>
-                    <span class="tech-ar"><i class="fas fa-cube"></i> ARCore (Android)</span>
-                    <span class="tech-ar"><i class="fas fa-cube"></i> ARKit (iOS)</span>
-                    <span class="tech-ar"><i class="fas fa-code"></i> C#</span>
-                    <span class="tech-ar"><i class="fas fa-mobile-alt"></i> Cross-Platform</span>
-                    <span class="tech-ar"><i class="fas fa-eye"></i> Computer Vision</span>
-                </div>
+                <div class="section-content">
+                    <p>
+                        Utilisation des technologies AR les plus avancées pour offrir une expérience immersive et précise sur tous les smartphones modernes.
+                    </p>
 
-                <div class="features-list">
-                    <div class="feature-item">
-                        <i class="fas fa-camera"></i>
-                        <span>Tracking ARCore/ARKit pour détection d'environnement précise</span>
+                    <div class="tech-stack">
+                        <span class="tech-tag"><i class="fab fa-unity"></i> Unity 3D</span>
+                        <span class="tech-tag"><i class="fas fa-cube"></i> ARCore (Android)</span>
+                        <span class="tech-tag"><i class="fas fa-cube"></i> ARKit (iOS)</span>
+                        <span class="tech-tag"><i class="fas fa-code"></i> C#</span>
+                        <span class="tech-tag"><i class="fas fa-mobile-alt"></i> Cross-Platform</span>
+                        <span class="tech-tag"><i class="fas fa-eye"></i> Computer Vision</span>
                     </div>
-                    <div class="feature-item">
-                        <i class="fas fa-cube"></i>
-                        <span>Rendu 3D temps réel des modèles planétaires haute résolution</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-hand-point-up"></i>
-                        <span>Interactions tactiles intuitives pour navigation et contrôle</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-compress-arrows-alt"></i>
-                        <span>Système d'échelle dynamique pour visualisations multi-niveaux</span>
-                    </div>
-                    <div class="feature-item">
-                        <i class="fas fa-lightbulb"></i>
-                        <span>Éclairage physique réaliste avec ombres et reflets</span>
+
+                    <div class="features-list">
+                        <div class="feature-item">
+                            <i class="fas fa-camera"></i>
+                            <span>Tracking ARCore/ARKit pour détection d'environnement précise</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-cube"></i>
+                            <span>Rendu 3D temps réel des modèles planétaires haute résolution</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-hand-point-up"></i>
+                            <span>Interactions tactiles intuitives pour navigation et contrôle</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-compress-arrows-alt"></i>
+                            <span>Système d'échelle dynamique pour visualisations multi-niveaux</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fas fa-lightbulb"></i>
+                            <span>Éclairage physique réaliste avec ombres et reflets</span>
+                        </div>
                     </div>
                 </div>
-                
-                <div class="image-frame" style="margin-top: 25px;">
-                    <img src="../images/images anciens portfolio/solar.jpg" alt="Solar System AR - Technologies" class="main-project-image clickable-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                    <div class="image-placeholder-large" style="display: none;">
-                        <i class="fas fa-cogs" style="font-size: 4rem; margin-bottom: 20px; color: #ff6b6b;"></i>
-                        <h3>Technologies AR</h3>
-                        <p>Pipeline de rendu et tracking</p>
-                    </div>
-                </div>
-                <div class="image-caption">Interface AR montrant le tracking environnemental et le rendu 3D des planètes en temps réel</div>
             </div>
 
             <!-- Précision scientifique -->
@@ -315,65 +487,70 @@
                     </div>
                     Précision scientifique
                 </h2>
-                
-                <div class="specs-grid">
-                    <div class="spec-card">
-                        <h4><i class="fas fa-database" style="color: #3b82f6;"></i> Données astronomiques</h4>
-                        <p>Sources NASA et ESA pour garantir l'exactitude scientifique</p>
-                    </div>
-                    <div class="spec-card">
-                        <h4><i class="fas fa-calculator" style="color: #3b82f6;"></i> Calculs orbitaux</h4>
-                        <p>Algorithmes de mécanique céleste pour mouvements réalistes</p>
-                    </div>
-                    <div class="spec-card">
-                        <h4><i class="fas fa-ruler-combined" style="color: #3b82f6;"></i> Proportions exactes</h4>
-                        <p>Respect des échelles réelles distances/diamètres planétaires</p>
-                    </div>
-                    <div class="spec-card">
-                        <h4><i class="fas fa-sync" style="color: #3b82f6;"></i> Temps réel</h4>
-                        <p>Synchronisation avec positions astronomiques actuelles</p>
+                <div class="section-content">
+                    <p>
+                        Données astronomiques officielles et calculs de mécanique céleste pour garantir l'exactitude scientifique et la valeur éducative de l'application.
+                    </p>
+
+                    <div class="specs-grid">
+                        <div class="spec-card">
+                            <h4><i class="fas fa-database" style="color: #ff6b6b;"></i> Sources NASA/ESA</h4>
+                            <p>Données officielles pour garantir l'exactitude des informations astronomiques</p>
+                        </div>
+                        <div class="spec-card">
+                            <h4><i class="fas fa-calculator" style="color: #ff6b6b;"></i> Calculs orbitaux</h4>
+                            <p>Algorithmes de mécanique céleste pour mouvements réalistes</p>
+                        </div>
+                        <div class="spec-card">
+                            <h4><i class="fas fa-ruler-combined" style="color: #ff6b6b;"></i> Proportions exactes</h4>
+                            <p>Respect des échelles réelles distances/diamètres planétaires</p>
+                        </div>
+                        <div class="spec-card">
+                            <h4><i class="fas fa-sync" style="color: #ff6b6b;"></i> Temps réel</h4>
+                            <p>Synchronisation avec positions astronomiques actuelles</p>
+                        </div>
                     </div>
                 </div>
-
-                <p style="margin-top: 20px; font-size: 1.1rem; line-height: 1.8; text-align: center; background: rgba(59, 130, 246, 0.1); padding: 20px; border-radius: 10px;">
-                    <strong>Impact pédagogique :</strong> Transformation de concepts abstraits en expériences tangibles, permettant une compréhension intuitive des échelles cosmiques souvent incompréhensibles dans les supports éducatifs traditionnels.
-                </p>
             </div>
 
-            <!-- Résultats -->
-            <div class="content-section" style="background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(255, 167, 38, 0.1)); padding: 30px; border-radius: 20px;">
+
+            </div>
+
+            <!-- Innovation éducative -->
+            <div class="content-section">
                 <h2 class="section-title">
                     <div class="section-icon">
                         <i class="fas fa-trophy"></i>
                     </div>
                     Innovation éducative
                 </h2>
-                
-                <div class="achievement-stats">
-                    <div class="stat-item">
-                        <div class="stat-number">4</div>
-                        <div class="stat-label">Modes de visualisation</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">100%</div>
-                        <div class="stat-label">Échelles réelles</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">6+</div>
-                        <div class="stat-label">Phénomènes simulés</div>
-                    </div>
-                    <div class="stat-item">
-                        <div class="stat-number">Universal</div>
-                        <div class="stat-label">iOS & Android</div>
+                <div class="section-content">
+                    <p>
+                        Révolution pédagogique en astronomie : première application AR grand public proposant les vraies échelles du système solaire avec une précision scientifique inégalée.
+                    </p>
+
+                    <div class="specs-grid">
+                        <div class="spec-card">
+                            <h4><i class="fas fa-eye" style="color: #ff6b6b;"></i> 4 Modes Visualisation</h4>
+                            <p>Distances, diamètres, orbites et phénomènes astronomiques</p>
+                        </div>
+                        <div class="spec-card">
+                            <h4><i class="fas fa-ruler" style="color: #ff6b6b;"></i> Échelles Réelles 100%</h4>
+                            <p>Proportions authentiques jamais vues en AR éducative</p>
+                        </div>
+                        <div class="spec-card">
+                            <h4><i class="fas fa-star" style="color: #ff6b6b;"></i> 6+ Phénomènes</h4>
+                            <p>Éclipses, cycles lunaires, saisons, marées simulés</p>
+                        </div>
+                        <div class="spec-card">
+                            <h4><i class="fas fa-mobile-alt" style="color: #ff6b6b;"></i> iOS & Android</h4>
+                            <p>Compatible tous smartphones modernes</p>
+                        </div>
                     </div>
                 </div>
-
-                <p style="text-align: center; margin-top: 20px; font-size: 1.1rem; color: #64748b;">
-                    <strong>Révolution pédagogique en astronomie</strong><br>
-                    Première application AR grand public proposant les vraies échelles du système solaire
-                </p>
             </div>
-        </main>
+
+        </div>
     </div>
 
     <script>
@@ -383,14 +560,15 @@
                 const modal = document.createElement('div');
                 modal.className = 'image-modal';
                 modal.innerHTML = `
-                    <div class="modal-content">
-                        <span class="close-modal">&times;</span>
-                        <img src="${this.src}" alt="${this.alt}" style="max-width: 90vw; max-height: 90vh;">
+                    <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: flex; align-items: center; justify-content: center; z-index: 1000;">
+                        <div style="position: relative; max-width: 90vw; max-height: 90vh;">
+                            <span onclick="document.body.removeChild(this.closest('.image-modal'))" style="position: absolute; top: 10px; right: 20px; color: white; font-size: 30px; cursor: pointer; z-index: 1001;">&times;</span>
+                            <img src="${this.src}" alt="${this.alt}" style="max-width: 90vw; max-height: 90vh; border-radius: 10px;">
+                        </div>
                     </div>
                 `;
                 document.body.appendChild(modal);
                 
-                modal.querySelector('.close-modal').onclick = () => document.body.removeChild(modal);
                 modal.onclick = (e) => {
                     if (e.target === modal) document.body.removeChild(modal);
                 };
