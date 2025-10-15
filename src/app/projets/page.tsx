@@ -133,6 +133,63 @@ export default function Projets() {
       ],
       demo: '/projects/trashProject_new.html',
       status: 'Terminé'
+    },
+    {
+      id: 8,
+      title: 'Portfolio Interactif 3D - Three.js',
+      description: 'Portfolio interactif 3D construit avec Three.js présentant un monde hexagonal où les visiteurs explorent projets et compétences à travers des objets immersifs.',
+      image: '/images/images%20anciens%20portfolio/portfolio3d.jpg',
+      category: 'Web',
+      technologies: ['Three.js', 'JavaScript', 'Blender', 'UI Animation', 'WebGL'],
+      date: '2024',
+      client: 'Portfolio Personnel',
+      features: [
+        'Monde 3D hexagonal immersif',
+        'Navigation caméra fluide',
+        'Zones thématiques interactives',
+        'Objets 3D représentant les projets',
+        'Animations UI sophistiquées'
+      ],
+      demo: '/projects/portfolio3d.html',
+      status: 'Terminé'
+    },
+    {
+      id: 9,
+      title: 'EGO - Survival Game Multijoueur',
+      description: 'Jeu de survie hardcore en vue isométrique 2D où les joueurs évoluent sur une planète avec un écosystème fermé et auto-suffisant. Chaque ressource compte.',
+      image: '/images/images%20anciens%20portfolio/EGO1.jpg',
+      category: 'Mobile',
+      technologies: ['Unity', 'C#', 'Multiplayer', 'Isometric 2D', 'Game Design'],
+      date: '2024',
+      client: 'Projet Indie Game',
+      features: [
+        'Écosystème vivant interconnecté',
+        'Survie hardcore avec mort permanente',
+        'Multijoueur coopération/trahison',
+        'Crafting et exploration de biomes',
+        'Monde persistant évolutif'
+      ],
+      demo: '/projects/ego.html',
+      status: 'Terminé'
+    },
+    {
+      id: 10,
+      title: 'Freestyle Challenge - Jeu Web Audio',
+      description: 'Application web mobile-first permettant de faire du freestyle sur des beats avec génération de mots aléatoires et enregistrement audio haute qualité.',
+      image: '/images/images%20anciens%20portfolio/wordbeat.jpg',
+      category: 'Web',
+      technologies: ['JavaScript', 'Web Audio API', 'MediaRecorder API', 'Vite', 'Netlify'],
+      date: '2024',
+      client: 'Seazon Studios',
+      features: [
+        'Interface mobile-first responsive',
+        'Upload et lecture seamless de beats',
+        'Enregistrement audio isolé haute qualité',
+        'Export et partage intégrés',
+        'Configuration de sessions personnalisées'
+      ],
+      demo: '/projects/freestyle-challenge.html',
+      status: 'Terminé'
     }
   ];
 
