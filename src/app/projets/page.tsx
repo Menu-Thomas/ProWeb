@@ -209,10 +209,70 @@ export default function Projets() {
       ],
       demo: '/projects/solar-system-ar.html',
       status: 'Terminé'
+    },
+    {
+      id: 12,
+      title: 'Aubert & Duval - Ingénierie Forge',
+      description: 'Ingénieur forge spécialisé en simulation de déformation à chaud, conception de processus industriels et documentation technique pour l\'aéronautique et la défense.',
+      image: '/images/images%20anciens%20portfolio/aubertpresse.jpg',
+      category: 'Industriel',
+      technologies: ['Forge Simulation', 'CAO/DAO', 'Analyse Contraintes', 'Documentation PPR', 'Normes Sécurité'],
+      date: '2019-2024',
+      client: 'Aubert & Duval (Groupe Eramet)',
+      features: [
+        'Simulation déformation à chaud avec logiciel Forge',
+        'Conception profils pièces selon spécifications',
+        'Définition processus fabrication industrielle',
+        'Création plans outillages et documentation technique',
+        'Support technique atelier et coordination équipes',
+        'Communication clients internationaux (FR/EN)'
+      ],
+      demo: '/projects/aubert-duval.html',
+      status: '5 ans d\'expérience'
+    },
+    {
+      id: 13,
+      title: 'Solaronics - Dessinateur Industriel',
+      description: 'Conception et rédaction de plans pour solutions de chauffage innovantes et efficaces. Développement de systèmes infrarouge, air chaud, et récupération de chaleur.',
+      image: '/images/solaronics.jpg',
+      category: 'Industriel',
+      technologies: ['Creo Elements', 'Conception Industrielle', 'Plans Techniques', 'Relation Atelier/Bureau'],
+      date: '2018-2019',
+      client: 'Solaronics France',
+      features: [
+        'Conception sur logiciel Creo Elements',
+        'Rédaction de plans techniques détaillés',
+        'Relation atelier/bureau d\'études',
+        'Solutions de chauffage décentralisé',
+        'Systèmes infrarouge et air chaud',
+        'Unités de condensation et régulation'
+      ],
+      demo: '/projects/solaronics.html',
+      status: 'Expérience industrielle'
+    },
+    {
+      id: 14,
+      title: '43ème Olympiades des Métiers - CAO',
+      description: 'Participation aux prestigieuses Olympiades des Métiers 2015 en Conception Assistée par Ordinateur. Classé 1er régional et qualifié pour représenter la région aux finales nationales.',
+      image: '/images/olympiades.jpg',
+      category: 'Industriel',
+      technologies: ['CAO 3D', 'Conception Technique', 'Modélisation', 'Plans Industriels'],
+      date: '2015',
+      client: 'WorldSkills France (COFOM)',
+      features: [
+        'Classement 1er régional en CAO',
+        'Qualification pour les finales nationales',
+        'Représentation de la région au niveau national',
+        'Compétition internationale reconnue WorldSkills',
+        'Épreuve technique de conception 3D',
+        'Validation des compétences CAO professionnelles'
+      ],
+      demo: '/projects/olympiades-metiers.html',
+      status: '1er Régional - Finaliste National'
     }
   ];
 
-  const categories = ['Tous', 'IoT', 'Web', 'Mobile', 'Unity'];
+  const categories = ['Tous', 'IoT', 'Web', 'Mobile', 'Unity', 'Industriel'];
 
   // Filter projects based on active category
   const filteredProjects = activeFilter === 'Tous' 
@@ -505,16 +565,72 @@ export default function Projets() {
 
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
             {[
-              'Unity', 'C#', 'Arduino', 'ESP32', 'LoRa', 'NFC',
-              'VR', 'AR', 'IoT', 'WebSocket', 'Leia SDK', 'Eye-Tracking',
-              'Dolibarr API', 'REST', 'Physics Engine', 'Sensor.Community'
+              // Langages avec images
+              { name: 'Unity', image: '/images/Unity.jpg' },
+              { name: 'C#', image: '/images/csharp.jpg' },
+              { name: 'Python', image: '/images/python.jpg' },
+              { name: 'Java', image: '/images/java.jpg' },
+              { name: 'C++', image: '/images/c++.jpg' },
+              { name: 'PHP', image: '/images/php.jpg' },
+              { name: 'HTML', image: '/images/html.jpg' },
+              { name: 'CSS', image: '/images/css.jpg' },
+              { name: 'React', image: '/images/react.jpg' },
+              { name: 'SQL', image: '/images/sql.jpg' },
+              { name: 'Git', image: '/images/git.jpg' },
+              { name: 'Docker', image: '/images/docker.jpg' },
+              
+              // Technologies IoT/Hardware
+              { name: 'Arduino', image: '/images/arduino.jpg' },
+              { name: 'LoRa', image: null },
+              { name: 'NFC', image: null },
+              
+              // Technologies Spécialisées
+              { name: 'VR', image: null },
+              { name: 'AR', image: null },
+              { name: 'IoT', image: null },
+              { name: 'WebSocket', image: null },
+              { name: 'REST', image: null },
+              
+              // Logiciels CAO
+              { name: 'CATIA', image: '/images/catia.jpg' },
+              { name: 'AutoCAD', image: '/images/autocad.jpg' },
+              { name: 'Creo', image: '/images/creo.jpg' },
+              { name: 'SketchUp', image: '/images/sketchup.jpg' },
+              { name: 'Lecture de Plans', image: null },
+              { name: 'Rédaction de Plans', image: null },
+              
+              // Industriel
+              { name: 'CAO/DAO', image: null },
+              { name: 'Forge Simulation', image: null },
+              { name: 'Documentation Technique', image: null }
             ].map((tech, index) => (
               <div
                 key={index}
                 className="bg-white rounded-lg p-4 shadow-md hover:shadow-lg transition-shadow text-center"
               >
-                <div className="text-2xl mb-2">⚡</div>
-                <div className="font-semibold text-secondary-800">{tech}</div>
+                <div className="text-2xl mb-2 h-12 flex items-center justify-center">
+                  {tech.image ? (
+                    <img 
+                      src={tech.image} 
+                      alt={tech.name}
+                      className="w-8 h-8 object-contain"
+                      onError={(e) => {
+                        // Fallback to emoji if image fails to load
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = 'none';
+                        const fallback = target.nextElementSibling as HTMLElement;
+                        if (fallback) fallback.style.display = 'block';
+                      }}
+                    />
+                  ) : null}
+                  <span 
+                    className={`text-2xl ${tech.image ? 'hidden' : 'block'}`}
+                    style={{ display: tech.image ? 'none' : 'block' }}
+                  >
+                    ⚡
+                  </span>
+                </div>
+                <div className="font-semibold text-secondary-800">{tech.name}</div>
               </div>
             ))}
           </div>

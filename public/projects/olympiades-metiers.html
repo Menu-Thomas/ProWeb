@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>43ème Olympiades des Métiers - CAO | Thomas Menu</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .project-header {
+            background: linear-gradient(135deg, #d4af37 0%, #f7dc6f 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+        }
+
+        .project-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="rgba(255,255,255,0.1)"><polygon points="0,0 1000,100 1000,0"/></svg>');
+            background-size: cover;
+        }
+
+        .project-header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            position: relative;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .project-header .subtitle {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .achievement-badge {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            position: relative;
+            font-size: 1.1rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .achievement-badge i {
+            margin-right: 0.75rem;
+            font-size: 1.5rem;
+        }
+
+        .demo-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            position: relative;
+        }
+
+        .demo-btn {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            text-decoration: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .demo-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .demo-btn i {
+            margin-right: 0.5rem;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 2rem;
+            left: 0;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateX(-5px);
+        }
+
+        .back-button i {
+            margin-right: 0.5rem;
+        }
+
+        .content-grid {
+            max-width: 1200px;
+            margin: -2rem auto 4rem;
+            padding: 0 2rem;
+            display: grid;
+            gap: 2rem;
+        }
+
+        .content-section {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .content-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #d4af37, #f7dc6f);
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f8f9fa;
+        }
+
+        .section-icon {
+            background: linear-gradient(135deg, #d4af37, #f7dc6f);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .section-title h2 {
+            font-size: 1.75rem;
+            color: #d4af37;
+            font-weight: 700;
+        }
+
+        .section-content {
+            color: #555;
+            font-size: 1.1rem;
+        }
+
+        .section-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .section-content strong {
+            color: #d4af37;
+        }
+
+        .olympic-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #fff9e6 0%, #fff3cd 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            border: 2px solid #d4af37;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.2);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #d4af37;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+
+        .achievement-timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .achievement-timeline::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, #d4af37, #f7dc6f);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 80px;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-icon {
+            position: absolute;
+            left: 10px;
+            top: 0;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #d4af37, #f7dc6f);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            border: 3px solid white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .timeline-content {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border-left: 4px solid #d4af37;
+        }
+
+        .timeline-content h4 {
+            color: #d4af37;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .worldskills-info {
+            background: linear-gradient(135deg, #d4af37 0%, #f7dc6f 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        .worldskills-info h3 {
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .worldskills-info p {
+            margin: 0;
+            opacity: 0.9;
+        }
+
+        .competition-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .detail-card {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 4px solid #d4af37;
+        }
+
+        .detail-card h4 {
+            color: #d4af37;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+
+        .detail-card h4 i {
+            margin-right: 0.75rem;
+            font-size: 1.2rem;
+        }
+
+        .detail-card ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .detail-card li {
+            padding: 0.5rem 0;
+            display: flex;
+            align-items: start;
+        }
+
+        .detail-card li i {
+            color: #d4af37;
+            margin-right: 0.75rem;
+            margin-top: 0.25rem;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .tech-badge {
+            background: linear-gradient(135deg, #d4af37, #f7dc6f);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+
+        .tech-badge i {
+            margin-right: 0.5rem;
+        }
+
+        .medal-showcase {
+            text-align: center;
+            padding: 3rem 2rem;
+            background: radial-gradient(circle, #fff9e6 0%, #f8f9fa 100%);
+            border-radius: 20px;
+            margin: 2rem 0;
+            border: 3px solid #d4af37;
+        }
+
+        .medal {
+            font-size: 6rem;
+            margin-bottom: 1rem;
+            filter: drop-shadow(0 5px 15px rgba(212, 175, 55, 0.3));
+        }
+
+        .medal-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #d4af37;
+            margin-bottom: 1rem;
+        }
+
+        .medal-description {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .project-header {
+                padding: 3rem 1rem;
+            }
+
+            .project-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .content-grid {
+                padding: 0 1rem;
+                grid-template-columns: 1fr;
+            }
+
+            .back-button {
+                top: 1rem;
+                left: 1rem;
+                padding: 0.5rem 1rem;
+            }
+
+            .olympic-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .timeline-item {
+                padding-left: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="project-header">
+        <div class="header-container">
+            <a href="../projets/" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                Retour aux projets
+            </a>
+            
+            <h1>43ème Olympiades des Métiers</h1>
+            <p class="subtitle">Conception Assistée par Ordinateur (CAO) - 2015</p>
+            
+            <div class="achievement-badge">
+                <i class="fas fa-trophy"></i>
+                1er Régional - Finaliste National
+            </div>
+
+            <div class="demo-links">
+                <a href="#competition" class="demo-btn">
+                    <i class="fas fa-medal"></i>
+                    La Compétition
+                </a>
+                <a href="#achievement" class="demo-btn">
+                    <i class="fas fa-trophy"></i>
+                    Résultats
+                </a>
+                <a href="#worldskills" class="demo-btn">
+                    <i class="fas fa-globe"></i>
+                    WorldSkills
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-grid">
+        <div class="medal-showcase">
+            <div class="medal">🥇</div>
+            <div class="medal-title">1er Place Régionale</div>
+            <div class="medal-description">
+                Qualification pour représenter la région aux finales nationales<br>
+                Conception Assistée par Ordinateur (CAO)
+            </div>
+        </div>
+
+        <div class="content-section" id="competition">
+            <div class="section-title">
+                <div class="section-icon">
+                    <i class="fas fa-medal"></i>
+                </div>
+                <h2>Les Olympiades des Métiers 2015</h2>
+            </div>
+            <div class="section-content">
+                <p>
+                    Les <strong>Olympiades des Métiers</strong> (WorldSkills) représentent la plus grande compétition 
+                    internationale des métiers au monde, équivalente aux Jeux Olympiques pour les compétences professionnelles. 
+                    En <strong>2015</strong>, la 43ème édition s'est déroulée à <strong>São Paulo, Brésil</strong>.
+                </p>
+
+                <div class="worldskills-info">
+                    <h3><i class="fas fa-globe"></i> WorldSkills - L'Excellence Mondiale des Métiers</h3>
+                    <p>
+                        Compétition internationale unique rassemblant près de 1 200 jeunes de moins de 23 ans 
+                        originaires de tous les continents, se mesurant dans une cinquantaine de métiers 
+                        différents couvrant tous les secteurs économiques.
+                    </p>
+                </div>
+
+                <div class="olympic-stats">
+                    <div class="stat-card">
+                        <div class="stat-number">43</div>
+                        <div class="stat-label">ème Édition</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">2015</div>
+                        <div class="stat-label">São Paulo</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">1200</div>
+                        <div class="stat-label">Compétiteurs</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">50</div>
+                        <div class="stat-label">Métiers</div>
+                    </div>
+                </div>
+
+                <div class="competition-details">
+                    <div class="detail-card">
+                        <h4><i class="fas fa-calendar"></i> Déroulement de la Compétition</h4>
+                        <ul>
+                            <li><i class="fas fa-flag-checkered"></i> Sélections régionales en France</li>
+                            <li><i class="fas fa-trophy"></i> Finales nationales françaises</li>
+                            <li><i class="fas fa-globe"></i> Compétition internationale au Brésil</li>
+                            <li><i class="fas fa-users"></i> Âge limite : moins de 23 ans</li>
+                        </ul>
+                    </div>
+                    <div class="detail-card">
+                        <h4><i class="fas fa-cog"></i> Secteur CAO</h4>
+                        <ul>
+                            <li><i class="fas fa-cube"></i> Conception Assistée par Ordinateur</li>
+                            <li><i class="fas fa-drafting-compass"></i> Modélisation 3D avancée</li>
+                            <li><i class="fas fa-file-alt"></i> Plans techniques industriels</li>
+                            <li><i class="fas fa-clock"></i> Épreuves chronométrées</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section" id="achievement">
+            <div class="section-title">
+                <div class="section-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <h2>Parcours et Résultats</h2>
+            </div>
+            <div class="section-content">
+                <p>
+                    Mon parcours aux <strong>43ème Olympiades des Métiers 2015</strong> en Conception Assistée par Ordinateur 
+                    témoigne d'une maîtrise technique avancée et d'une capacité à performer sous pression dans un environnement 
+                    compétitif de haut niveau.
+                </p>
+
+                <div class="achievement-timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-icon">1</div>
+                        <div class="timeline-content">
+                            <h4>Sélections Régionales</h4>
+                            <p>Participation aux épreuves régionales de CAO avec des défis techniques complexes de modélisation 3D et de conception industrielle.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-icon">🥇</div>
+                        <div class="timeline-content">
+                            <h4>1ère Place Régionale</h4>
+                            <p><strong>Classement 1er régional</strong> - Performance exceptionnelle qui m'a qualifié pour représenter ma région au niveau national.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-icon">🇫🇷</div>
+                        <div class="timeline-content">
+                            <h4>Finales Nationales</h4>
+                            <p>Participation aux finales nationales françaises - Représentation officielle de la région face aux meilleurs candidats de France.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-icon">✨</div>
+                        <div class="timeline-content">
+                            <h4>Validation des Compétences</h4>
+                            <p>Reconnaissance officielle de l'excellence en CAO et conception technique au plus haut niveau de compétition française.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tech-stack">
+                    <span class="tech-badge"><i class="fas fa-cube"></i> CAO 3D</span>
+                    <span class="tech-badge"><i class="fas fa-drafting-compass"></i> Conception Technique</span>
+                    <span class="tech-badge"><i class="fas fa-cog"></i> Modélisation</span>
+                    <span class="tech-badge"><i class="fas fa-file-alt"></i> Plans Industriels</span>
+                    <span class="tech-badge"><i class="fas fa-clock"></i> Gestion du Temps</span>
+                    <span class="tech-badge"><i class="fas fa-target"></i> Précision Technique</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section" id="worldskills">
+            <div class="section-title">
+                <div class="section-icon">
+                    <i class="fas fa-globe"></i>
+                </div>
+                <h2>WorldSkills - Excellence Mondiale</h2>
+            </div>
+            <div class="section-content">
+                <p>
+                    <strong>WorldSkills</strong> (anciennement Olympiades des Métiers) est l'organisation mondiale 
+                    qui promeut l'excellence dans l'enseignement et la formation professionnels à travers des 
+                    compétitions internationales de très haut niveau.
+                </p>
+
+                <div class="competition-details">
+                    <div class="detail-card">
+                        <h4><i class="fas fa-history"></i> Historique</h4>
+                        <ul>
+                            <li><i class="fas fa-calendar"></i> Créé en 1946 après la 2ème Guerre Mondiale</li>
+                            <li><i class="fas fa-flag"></i> Première compétition à Madrid en 1950</li>
+                            <li><i class="fas fa-globe"></i> Expansion mondiale progressive</li>
+                            <li><i class="fas fa-users"></i> 88 pays membres en 2024</li>
+                        </ul>
+                    </div>
+                    <div class="detail-card">
+                        <h4><i class="fas fa-target"></i> Objectifs</h4>
+                        <ul>
+                            <li><i class="fas fa-star"></i> Promouvoir l'excellence des métiers</li>
+                            <li><i class="fas fa-graduation-cap"></i> Valoriser la formation professionnelle</li>
+                            <li><i class="fas fa-handshake"></i> Reconnaissance internationale des compétences</li>
+                            <li><i class="fas fa-chart-line"></i> Développement économique par les compétences</li>
+                        </ul>
+                    </div>
+                    <div class="detail-card">
+                        <h4><i class="fas fa-trophy"></i> 2015 - São Paulo</h4>
+                        <ul>
+                            <li><i class="fas fa-map-marker-alt"></i> São Paulo, Brésil</li>
+                            <li><i class="fas fa-medal"></i> Le Brésil termine 1er au classement</li>
+                            <li><i class="fas fa-flag"></i> La France se classe dans le top 10</li>
+                            <li><i class="fas fa-globe-americas"></i> Premier Olympiades en Amérique du Sud</li>
+                        </ul>
+                    </div>
+                    <div class="detail-card">
+                        <h4><i class="fas fa-cogs"></i> Organisation française</h4>
+                        <ul>
+                            <li><i class="fas fa-building"></i> WorldSkills France (COFOM)</li>
+                            <li><i class="fas fa-balance-scale"></i> Association loi 1901 depuis 1990</li>
+                            <li><i class="fas fa-map"></i> Sélections régionales puis nationales</li>
+                            <li><i class="fas fa-certificate"></i> Reconnaissance officielle des compétences</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="worldskills-info">
+                    <h3><i class="fas fa-lightbulb"></i> Impact de cette Participation</h3>
+                    <p>
+                        Cette participation aux Olympiades des Métiers représente une validation exceptionnelle 
+                        de mes compétences en CAO au plus haut niveau de compétition française et internationale. 
+                        Le classement de <strong>1er régional</strong> et la qualification pour les finales nationales 
+                        attestent d'une maîtrise technique remarquable et d'une capacité à exceller dans un 
+                        environnement compétitif exigeant.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

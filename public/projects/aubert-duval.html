@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aubert & Duval - Ingénierie Forge | Thomas Menu</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .project-header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+        }
+
+        .project-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="rgba(255,255,255,0.1)"><polygon points="0,0 1000,100 1000,0"/></svg>');
+            background-size: cover;
+        }
+
+        .project-header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .project-header .subtitle {
+            font-size: 1.5rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .company-badge {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .company-badge i {
+            margin-right: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .demo-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            position: relative;
+        }
+
+        .demo-btn {
+            display: inline-flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            text-decoration: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .demo-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .demo-btn i {
+            margin-right: 0.5rem;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 2rem;
+            left: 0;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            z-index: 10;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateX(-5px);
+        }
+
+        .back-button i {
+            margin-right: 0.5rem;
+        }
+
+        .content-grid {
+            max-width: 1200px;
+            margin: -2rem auto 4rem;
+            padding: 0 2rem;
+            display: grid;
+            gap: 2rem;
+        }
+
+        .content-section {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .content-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #2c3e50, #34495e);
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f8f9fa;
+        }
+
+        .section-icon {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .section-title h2 {
+            font-size: 1.75rem;
+            color: #2c3e50;
+            font-weight: 700;
+        }
+
+        .section-content {
+            color: #555;
+            font-size: 1.1rem;
+        }
+
+        .section-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .section-content strong {
+            color: #2c3e50;
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .spec-item {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 15px;
+            border-left: 4px solid #2c3e50;
+        }
+
+        .spec-item h4 {
+            color: #2c3e50;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+
+        .spec-item h4 i {
+            margin-right: 0.5rem;
+            color: #2c3e50;
+        }
+
+        .spec-item p {
+            color: #666;
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .tech-badge {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+
+        .tech-badge i {
+            margin-right: 0.5rem;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+
+        .feature-list li {
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+
+        .feature-list li i {
+            color: #2c3e50;
+            margin-right: 1rem;
+            margin-top: 0.25rem;
+            font-size: 1.2rem;
+        }
+
+        .feature-list li strong {
+            color: #2c3e50;
+        }
+
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .impact-item {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .impact-item:hover {
+            border-color: #2c3e50;
+            transform: translateY(-5px);
+        }
+
+        .impact-item .icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .impact-item h4 {
+            color: #2c3e50;
+            margin-bottom: 0.75rem;
+            font-weight: 700;
+        }
+
+        .impact-item p {
+            color: #666;
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin: 2rem 0;
+        }
+
+        .highlight-box h3 {
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .highlight-box p {
+            margin: 0;
+            opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+            .project-header {
+                padding: 3rem 1rem;
+            }
+
+            .project-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .content-grid {
+                padding: 0 1rem;
+                grid-template-columns: 1fr;
+            }
+
+            .back-button {
+                top: 1rem;
+                left: 1rem;
+                padding: 0.5rem 1rem;
+            }
+
+            .specs-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="project-header">
+        <div class="header-container">
+            <a href="../projets/" class="back-button">
+                <i class="fas fa-arrow-left"></i>
+                Retour aux projets
+            </a>
+            
+            <h1>Aubert & Duval</h1>
+            <p class="subtitle">Ingénieur Forge - Simulation & Conception Industrielle</p>
+            
+            <div class="company-badge">
+                <i class="fas fa-industry"></i>
+                Groupe Eramet • 5 ans d'expérience
+            </div>
+
+            <div class="demo-links">
+                <a href="#company" class="demo-btn">
+                    <i class="fas fa-building"></i>
+                    L'Entreprise
+                </a>
+                <a href="#missions" class="demo-btn">
+                    <i class="fas fa-cogs"></i>
+                    Missions
+                </a>
+                <a href="#impact" class="demo-btn">
+                    <i class="fas fa-rocket"></i>
+                    Impact
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-grid">
+        <div class="content-section" id="company">
+            <div class="section-title">
+                <div class="section-icon">
+                    <i class="fas fa-industry"></i>
+                </div>
+                <h2>À propos d'Aubert & Duval</h2>
+            </div>
+            <div class="section-content">
+                <p>
+                    <strong>Aubert & Duval</strong>, filiale du groupe Eramet (maintenant contrôlé par Airbus, Safran et Tikehau Capital), 
+                    est un acteur stratégique de la métallurgie, spécialisé dans les pièces forgées et alliages complexes pour 
+                    l'aéronautique, la défense, l'énergie et l'industrie.
+                </p>
+                
+                <div class="highlight-box">
+                    <h3><i class="fas fa-map-marker-alt"></i> Site de Pamiers (09)</h3>
+                    <p>
+                        920 employés, équipements lourds (presses, fours, lignes d'usinage). 
+                        Unité clé pour la production de pièces critiques à forte valeur ajoutée.
+                    </p>
+                </div>
+
+                <div class="specs-grid">
+                    <div class="spec-item">
+                        <h4><i class="fas fa-users"></i> Équipe</h4>
+                        <p>920 collaborateurs spécialisés en métallurgie et forge</p>
+                    </div>
+                    <div class="spec-item">
+                        <h4><i class="fas fa-cog"></i> Équipements</h4>
+                        <p>Presses industrielles, fours haute température, lignes d'usinage</p>
+                    </div>
+                    <div class="spec-item">
+                        <h4><i class="fas fa-plane"></i> Secteurs</h4>
+                        <p>Aéronautique, défense, énergie, industrie lourde</p>
+                    </div>
+                    <div class="spec-item">
+                        <h4><i class="fas fa-globe"></i> Groupe</h4>
+                        <p>Eramet (Airbus, Safran, Tikehau Capital)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section" id="missions">
+            <div class="section-title">
+                <div class="section-icon">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <h2>Missions Techniques</h2>
+            </div>
+            <div class="section-content">
+                <p>
+                    En tant qu'<strong>Ingénieur Forge</strong>, j'ai développé une expertise approfondie en simulation 
+                    industrielle, conception de processus et documentation technique pour des pièces critiques.
+                </p>
+
+                <ul class="feature-list">
+                    <li>
+                        <i class="fas fa-calculator"></i>
+                        <div>
+                            <strong>Simulation déformation à chaud avec Forge</strong><br>
+                            Analyse des flux de matière et des contraintes pour optimiser les processus de forgeage
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-drafting-compass"></i>
+                        <div>
+                            <strong>Conception profils pièces selon cahier des charges</strong><br>
+                            Design de pièces complexes conformes aux spécifications clients aéronautique/défense
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-project-diagram"></i>
+                        <div>
+                            <strong>Définition processus de fabrication</strong><br>
+                            Optimisation sécurité, qualité, coûts, délais et allocation des ressources
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-file-alt"></i>
+                        <div>
+                            <strong>Création plans outillages et documentation technique</strong><br>
+                            Rédaction de modèles, P_mod, PPR en français et anglais
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-wrench"></i>
+                        <div>
+                            <strong>Support technique atelier et coordination</strong><br>
+                            Accompagnement des équipes de production et collaboration avec les outilleurs
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-comments"></i>
+                        <div>
+                            <strong>Communication clients internationaux</strong><br>
+                            Échanges réguliers en anglais avec les donneurs d'ordre internationaux
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <div class="section-title">
+                <div class="section-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h2>Compétences Développées</h2>
+            </div>
+            <div class="section-content">
+                <div class="specs-grid">
+                    <div class="spec-item">
+                        <h4><i class="fas fa-desktop"></i> Simulation Industrielle</h4>
+                        <p>Maîtrise du logiciel Forge pour l'analyse des flux et contraintes, modélisation 3D des déformations</p>
+                    </div>
+                    <div class="spec-item">
+                        <h4><i class="fas fa-cube"></i> CAO & Conception</h4>
+                        <p>Dessin technique, création de modèles, rédaction d'instructions et de PPR (Procédures de Production)</p>
+                    </div>
+                    <div class="spec-item">
+                        <h4><i class="fas fa-chart-line"></i> Gestion Production</h4>
+                        <p>Suivi fabrication, documentation qualité, respect des normes sécurité industrielle</p>
+                    </div>
+                    <div class="spec-item">
+                        <h4><i class="fas fa-language"></i> Communication Technique</h4>
+                        <p>Collaboration bilingue FR/EN, coordination multi-acteurs, présentation clients internationaux</p>
+                    </div>
+                </div>
+
+                <div class="tech-stack">
+                    <span class="tech-badge"><i class="fas fa-calculator"></i> Forge Simulation</span>
+                    <span class="tech-badge"><i class="fas fa-cube"></i> CAO/DAO</span>
+                    <span class="tech-badge"><i class="fas fa-file-alt"></i> Documentation PPR</span>
+                    <span class="tech-badge"><i class="fas fa-shield-alt"></i> Normes Sécurité</span>
+                    <span class="tech-badge"><i class="fas fa-chart-bar"></i> Analyse Contraintes</span>
+                    <span class="tech-badge"><i class="fas fa-language"></i> Anglais Technique</span>
+                    <span class="tech-badge"><i class="fas fa-cog"></i> Gestion Qualité</span>
+                    <span class="tech-badge"><i class="fas fa-tools"></i> Plans Techniques</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section" id="impact">
+            <div class="section-title">
+                <div class="section-icon">
+                    <i class="fas fa-rocket"></i>
+                </div>
+                <h2>Impact & Résultats</h2>
+            </div>
+            <div class="section-content">
+                <p>
+                    Mon expertise en simulation et conception industrielle a contribué directement à l'amélioration 
+                    des processus de fabrication et à la satisfaction des clients internationaux.
+                </p>
+
+                <div class="impact-grid">
+                    <div class="impact-item">
+                        <div class="icon">✅</div>
+                        <h4>Processus Industrialisables</h4>
+                        <p>Mise en place de processus fiables et reproductibles pour la production en série</p>
+                    </div>
+                    <div class="impact-item">
+                        <div class="icon">📋</div>
+                        <h4>Documentation Technique</h4>
+                        <p>Production de documentation claire et précise, utile aux équipes de production</p>
+                    </div>
+                    <div class="impact-item">
+                        <div class="icon">🔧</div>
+                        <h4>Montée en Cadence</h4>
+                        <p>Participation active à la montée en cadence de fabrications critiques</p>
+                    </div>
+                    <div class="impact-item">
+                        <div class="icon">🌍</div>
+                        <h4>Collaboration Internationale</h4>
+                        <p>Collaboration directe avec des clients internationaux majeurs du secteur aéronautique</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <div class="section-title">
+                <div class="section-icon">
+                    <i class="fas fa-tools"></i>
+                </div>
+                <h2>Activités Complémentaires</h2>
+            </div>
+            <div class="section-content">
+                <p>
+                    Au-delà des missions principales, j'ai également participé à des activités transversales 
+                    renforçant l'expertise métallurgique de l'équipe.
+                </p>
+
+                <ul class="feature-list">
+                    <li>
+                        <i class="fas fa-cut"></i>
+                        <div>
+                            <strong>Habillage pièces pour forgeage</strong><br>
+                            Préparation et finition des pièces selon les spécifications techniques
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-file-contract"></i>
+                        <div>
+                            <strong>Analyse dossiers de conception</strong><br>
+                            Étude approfondie des cahiers des charges et contraintes techniques
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-clipboard-check"></i>
+                        <div>
+                            <strong>Gestion post-fabrication</strong><br>
+                            Suivi qualité et validation fonctionnelle des pièces produites
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-microscope"></i>
+                        <div>
+                            <strong>Plans de dissection et macroscopie</strong><br>
+                            Création de protocoles d'expertise métallurgique pour validation qualité
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
