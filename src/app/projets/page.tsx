@@ -295,9 +295,10 @@ export default function Projets() {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {filteredProjects.map((project) => (
-              <div
+              <Link
                 key={project.id}
-                className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-2xl transition-shadow duration-300 group"
+                href={project.demo || '#'}
+                className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 hover:shadow-2xl transition-shadow duration-300 group block cursor-pointer"
               >
                 {/* Project Image */}
                 <div className="relative h-56 bg-gradient-to-br from-primary-400 to-primary-600 overflow-hidden">
@@ -401,20 +402,15 @@ export default function Projets() {
                     </ul>
                   </div>
 
-                  {/* Links */}
-                  <div className="flex gap-3 pt-4 border-t border-gray-100">
-                    {project.demo && (
-                      <a
-                        href={project.demo}
-                        className="flex-1 bg-primary-600 hover:bg-primary-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200 flex items-center justify-center text-sm"
-                      >
-                        <ExternalLink size={16} className="mr-2" />
-                        Voir le projet
-                      </a>
-                    )}
+                  {/* Status indicator - Card is fully clickable */}
+                  <div className="flex justify-between items-center pt-4 border-t border-gray-100">
+                    <span className="text-sm text-secondary-500 italic">
+                      Cliquez pour voir les détails
+                    </span>
+                    <ExternalLink size={16} className="text-primary-600" />
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
             </div>
           )}
