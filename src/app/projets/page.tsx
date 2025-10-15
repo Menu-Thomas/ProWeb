@@ -190,6 +190,25 @@ export default function Projets() {
       ],
       demo: '/projects/freestyle-challenge.html',
       status: 'Terminé'
+    },
+    {
+      id: 11,
+      title: 'Solar System AR - Éducation Spatiale',
+      description: 'Application mobile AR éducative pour visualiser les vraies échelles de grandeur du système solaire avec animations et simulations de phénomènes astronomiques.',
+      image: '/images/images%20anciens%20portfolio/solar.jpg',
+      category: 'Mobile',
+      technologies: ['Unity', 'ARCore', 'ARKit', 'C#', 'Computer Vision'],
+      date: '2024',
+      client: 'Projet Éducatif',
+      features: [
+        'Visualisation distances proportionnelles réelles',
+        'Diamètres planétaires 3D en AR',
+        'Animations mouvements orbitaux',
+        'Simulation phénomènes astronomiques (éclipses, cycles)',
+        'Compatible iOS/Android smartphones'
+      ],
+      demo: '/projects/solar-system-ar.html',
+      status: 'Terminé'
     }
   ];
 
