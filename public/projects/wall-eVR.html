@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wall-E VR Interface - Contrôle VR de Robots Physiques | Thomas Menu</title>
+    <meta name="description" content="Wall-E VR : Interface VR immersive pour contrôler des robots physiques, drones et véhicules RC en réalité virtuelle avec Unity.">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .project-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #3b82f6, #2563eb, #1d4ed8);
+        }
+
+        .project-title {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .project-subtitle {
+            font-size: 1.3rem;
+            color: #666;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        .company-badge {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 500;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        .content-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .content-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            color: #1e293b;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #3b82f6;
+        }
+
+        .section-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.3rem;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.95);
+            color: #1e293b;
+            text-decoration: none;
+            border-radius: 12px;
+            font-weight: 500;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .back-button:hover {
+            background: white;
+            transform: translateX(-5px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .tech-tag {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .features-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .features-list li {
+            padding: 12px 0;
+            padding-left: 30px;
+            position: relative;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .features-list li:last-child {
+            border-bottom: none;
+        }
+
+        .features-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #3b82f6;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .spec-card {
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .spec-card h4 {
+            color: #1e293b;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .spec-card p {
+            color: #64748b;
+            font-size: 0.95rem;
+        }
+
+        .image-frame {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            margin: 20px 0;
+        }
+
+        .main-project-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+
+        .clickable-image {
+            cursor: pointer;
+        }
+
+        .clickable-image:hover {
+            transform: scale(1.02);
+        }
+
+        .image-caption {
+            text-align: center;
+            color: #64748b;
+            font-size: 0.95rem;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        .images-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .image-item {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .image-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .project-image {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        .image-placeholder-large, .image-placeholder-small {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .image-placeholder-large {
+            height: 400px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            padding-top: 50px;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.9);
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            max-width: 90%;
+            max-height: 90%;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-modal:hover {
+            color: #bbb;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .result-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .result-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .result-icon {
+            font-size: 2.5rem;
+            color: #3b82f6;
+            margin-bottom: 15px;
+        }
+
+        .result-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .project-title {
+                font-size: 2rem;
+            }
+
+            .project-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 1.4rem;
+            }
+
+            .specs-grid, .results-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .images-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .project-image, .image-placeholder-small {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../projets/" class="back-button">
+            <i class="fas fa-arrow-left"></i>
+            Retour aux projets
+        </a>
+
+        <div class="project-header">
+            <div style="margin-bottom: 20px;">
+                <img src="../images/images anciens portfolio/testvr2.jpg" alt="Wall-E VR Interface" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid #3b82f6; box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);">
+            </div>
+            <h1 class="project-title">
+                Wall-E VR Interface
+            </h1>
+            <p class="project-subtitle">Asset Unity pour faciliter les connexions IoT avec appareils RC</p>
+            <div class="company-badge">
+                <i class="fas fa-graduation-cap"></i> T-ESP-800 Project
+            </div>
+        </div>
+
+        <div class="content-grid">
+            <!-- Vue d'ensemble du projet -->
+            <div class="content-section">
+                <h2 class="section-title">
+                    <div class="section-icon">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                    Vue d'ensemble du projet
+                </h2>
+                <p style="margin-bottom: 20px; font-size: 1.1rem; line-height: 1.8;">
+                    <strong>Wall-E VR</strong> est un asset/outil de développement Unity conçu pour faciliter la création de connexions IoT entre le moteur Unity et des appareils radiocommandés (robots, RC, drones). Le projet fournit une interface Unity prête à l'emploi pour simplifier le développement de projets de contrôle RC, permettant aux développeurs de créer plus facilement des connexions bidirectionnelles entre Unity et tout appareil radiocommandé - par exemple, un jeu Mario Kart avec des karts RC réels.
+                </p>
+                
+                <div class="image-frame">
+                    <img src="../images/images anciens portfolio/testvr2.jpg" alt="Wall-E VR - Asset Unity IoT" class="main-project-image clickable-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="image-placeholder-large" style="display: none;">
+                        <i class="fas fa-plug" style="font-size: 4rem; margin-bottom: 20px;"></i>
+                        <h3>Wall-E VR Interface</h3>
+                        <p>Asset Unity pour connexions IoT</p>
+                    </div>
+                </div>
+                <div class="image-caption">Interface de développement Unity pour connexions IoT avec appareils RC</div>
+            </div>
+
+            <!-- Technologies utilisées -->
+            <div class="content-section">
+                <h2 class="section-title">
+                    <div class="section-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    Technologies utilisées
+                </h2>
+                <div class="tech-tags">
+                    <span class="tech-tag"><i class="fab fa-unity"></i> Unity 2020.3+</span>
+                    <span class="tech-tag"><i class="fab fa-microsoft"></i> C# API</span>
+                    <span class="tech-tag"><i class="fas fa-plug"></i> IoT Connectivity</span>
+                    <span class="tech-tag"><i class="fas fa-microchip"></i> Arduino/ESP</span>
+                    <span class="tech-tag"><i class="fas fa-wifi"></i> Serial/WiFi/BT</span>
+                    <span class="tech-tag"><i class="fas fa-cubes"></i> Asset Package</span>
+                </div>
+                <p style="margin-top: 20px; color: #64748b;">
+                    Asset Unity réutilisable fournissant une API C# simple pour créer des connexions IoT entre Unity et appareils radiocommandés (Arduino, ESP32, etc.) via Serial, WiFi ou Bluetooth.
+                </p>
+            </div>
+
+            <!-- Objectifs du projet -->
+            <div class="content-section">
+                <h2 class="section-title">
+                    <div class="section-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    Objectifs du projet
+                </h2>
+                <ul class="features-list">
+                    <li><strong>Asset Unity réutilisable :</strong> Créer un outil de développement facilitant l'intégration IoT dans Unity</li>
+                    <li><strong>Connexions simplifiées :</strong> Simplifier la création de connexions entre Unity et appareils radiocommandés (robots, RC, drones)</li>
+                    <li><strong>Communication bidirectionnelle :</strong> Permettre échange de données Unity ↔ Arduino/ESP avec latence minimale</li>
+                    <li><strong>Interface développeur :</strong> Fournir une API Unity claire pour contrôler facilement des appareils RC</li>
+                    <li><strong>Projets innovants :</strong> Permettre création de projets comme Mario Kart avec karts RC réels contrôlés depuis Unity</li>
+                </ul>
+            </div>
+
+            <!-- Méthodologie -->
+            <div class="content-section">
+                <h2 class="section-title">
+                    <div class="section-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    Méthodologie de développement
+                </h2>
+                <div class="specs-grid">
+                    <div class="spec-card">
+                        <h4><i class="fas fa-code" style="color: #3b82f6;"></i> Phase 1 : Architecture système</h4>
+                        <p>Conception de l'architecture de communication Unity-Arduino avec abstraction modulaire</p>
+                    </div>
+                    <div class="spec-card">
+                        <h4><i class="fas fa-plug" style="color: #3b82f6;"></i> Phase 2 : Couche IoT</h4>
+                        <p>Développement de la couche de communication série, WiFi, Bluetooth pour connexions IoT</p>
+                    </div>
+                    <div class="spec-card">
+                        <h4><i class="fas fa-cubes" style="color: #3b82f6;"></i> Phase 3 : API Unity</h4>
+                        <p>Création d'une API C# Unity simple et intuitive pour contrôle d'appareils RC</p>
+                    </div>
+                    <div class="spec-card">
+                        <h4><i class="fas fa-vr-cardboard" style="color: #3b82f6;"></i> Phase 4 : Interface VR démo</h4>
+                        <p>Développement d'une interface VR de démonstration pour visualiser le contrôle</p>
+                    </div>
+                    <div class="spec-card">
+                        <h4><i class="fas fa-shield-alt" style="color: #3b82f6;"></i> Phase 5 : Robustesse</h4>
+                        <p>Gestion d'erreurs, reconnexion automatique, et système de logs pour debug</p>
+                    </div>
+                    <div class="spec-card">
+                        <h4><i class="fas fa-vial" style="color: #3b82f6;"></i> Phase 6 : Tests</h4>
+                        <p>Tests avec différents appareils (robots, drones, karts RC) et validation</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cas d'usage -->
+            <div class="content-section">
+                <h2 class="section-title">
+                    <div class="section-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    Cas d'usage
+                </h2>
+                <div class="results-grid">
+                    <div class="result-card">
+                        <div class="result-icon">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <div class="result-title">Mario Kart réel</div>
+                        <p>Créer un jeu Mario Kart dans Unity contrôlant des karts RC physiques avec l'asset</p>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-icon">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="result-title">Contrôle robotique</div>
+                        <p>Développer rapidement des applications Unity de contrôle de robots sans refaire la couche IoT</p>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-icon">
+                            <i class="fas fa-drone"></i>
+                        </div>
+                        <div class="result-title">Applications drones</div>
+                        <p>Créer des interfaces Unity pour piloter et programmer des drones facilement</p>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-icon">
+                            <i class="fas fa-vr-cardboard"></i>
+                        </div>
+                        <div class="result-title">Expériences VR/AR</div>
+                        <p>Développer des expériences immersives contrôlant objets physiques depuis Unity</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Architecture système -->
+            <div class="content-section">
+                <h2 class="section-title">
+                    <div class="section-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    Architecture et flux système
+                </h2>
+                <ul class="features-list">
+                    <li><strong>Asset Unity</strong> fournit des scripts C# réutilisables pour communication IoT</li>
+                    <li><strong>API simplifiée</strong> permet aux développeurs d'envoyer commandes sans gérer la couche réseau</li>
+                    <li><strong>Gestionnaire de connexions</strong> gère automatiquement USB Serial, WiFi, Bluetooth</li>
+                    <li><strong>Protocole abstrait</strong> supporte Arduino, ESP32, Raspberry Pi et autres microcontrôleurs</li>
+                    <li><strong>Feedback bidirectionnel</strong> permet de recevoir données des appareils RC vers Unity</li>
+                    <li><strong>Interface VR/2D</strong> fournie en exemple pour démarrer rapidement</li>
+                </ul>
+                <div class="spec-card" style="margin-top: 20px;">
+                    <h4><i class="fas fa-info-circle" style="color: #3b82f6;"></i> Avantage développeur</h4>
+                    <p>Les développeurs Unity peuvent se concentrer sur leur gameplay/logique sans réinventer la roue de la communication IoT. L'asset gère toute la complexité de la connexion.</p>
+                </div>
+            </div>
+
+            <!-- Spécifications techniques -->
+            <div class="content-section">
+                <h2 class="section-title">
+                    <div class="section-icon">
+                        <i class="fas fa-cog"></i>
+                    </div>
+                    Spécifications techniques
+                </h2>
+                <div class="specs-grid">
+                    <div class="spec-card">
+                        <h4>Communication temps réel</h4>
+                        <p>Latence &lt;100ms pour contrôle réactif via Serial/WiFi/BT</p>
+                    </div>
+                    <div class="spec-card">
+                        <h4>Multi-protocoles</h4>
+                        <p>Support Serial, WiFi, Bluetooth pour connexions flexibles</p>
+                    </div>
+                    <div class="spec-card">
+                        <h4>Compatible Unity</h4>
+                        <p>Unity 2020.3+, compatibilité Windows, macOS, Linux</p>
+                    </div>
+                    <div class="spec-card">
+                        <h4>API documentée</h4>
+                        <p>Documentation complète C# avec exemples d'utilisation</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contexte de développement -->
+            <div class="content-section">
+                <h2 class="section-title">
+                    <div class="section-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    Contexte de développement
+                </h2>
+                <p style="margin-bottom: 15px;">
+                    <strong>Projet réalisé dans le cadre du programme T-ESP-800 :</strong>
+                </p>
+                <ul style="list-style-type: none; padding-left: 0;">
+                    <li style="margin-bottom: 10px;">🎓 <strong>Projet académique :</strong> Asset développé pour faciliter futurs projets Unity-IoT</li>
+                    <li style="margin-bottom: 10px;">� <strong>Outil développeur :</strong> Création d'un outil de développement réutilisable pour la communauté</li>
+                    <li style="margin-bottom: 10px;">⚡ <strong>Abstraction IoT :</strong> Simplification de la complexité des connexions IoT pour Unity</li>
+                    <li style="margin-bottom: 10px;">💡 <strong>Vision :</strong> Permettre aux développeurs Unity de créer rapidement des projets innovants avec appareils RC (ex: Mario Kart avec karts réels)</li>
+                </ul>
+            </div>
+
+            <!-- Résultats et impact -->
+            <div class="content-section">
+                <h2 class="section-title">
+                    <div class="section-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    Résultats et impact
+                </h2>
+                <div class="results-grid">
+                    <div class="result-card">
+                        <div class="result-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="result-title">Asset fonctionnel</div>
+                        <p>Livraison d'un asset Unity complet avec API C# documentée pour connexions IoT simplifiées.</p>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <div class="result-title">Productivité développeur</div>
+                        <p>Réduction drastique du temps de développement pour projets Unity-IoT grâce à l'abstraction fournie.</p>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-icon">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <div class="result-title">Projets innovants</div>
+                        <p>Permet création rapide de projets créatifs (Mario Kart réel, drones, robots) avec Unity.</p>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <div class="result-title">Compétences API</div>
+                        <p>Développement d'expertise en conception d'API, abstraction IoT, et outils pour développeurs.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Développements futurs -->
+            <div class="content-section">
+                <h2 class="section-title">
+                    <div class="section-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    Développements futurs
+                </h2>
+                <ul class="features-list">
+                    <li><strong>Support WebSocket :</strong> Ajouter support WebSocket pour communication réseau à distance</li>
+                    <li><strong>Documentation étendue :</strong> Créer tutoriels vidéo et exemples de code pour développeurs</li>
+                    <li><strong>Asset Store :</strong> Publier l'asset sur Unity Asset Store pour distribution communautaire</li>
+                    <li><strong>Protocoles additionnels :</strong> Support MQTT, HTTP REST pour plus de flexibilité IoT</li>
+                    <li><strong>Outils debug visuels :</strong> Interface Unity de monitoring des connexions et traffic IoT</li>
+                </ul>
+            </div>
+
+            <!-- Configuration développeur -->
+            <div class="content-section">
+                <h2 class="section-title">
+                    <div class="section-icon">
+                        <i class="fas fa-wrench"></i>
+                    </div>
+                    Configuration développeur
+                </h2>
+                <ol class="features-list">
+                    <li>Installer Unity Hub et Unity 2020.3+ (ou version ultérieure)</li>
+                    <li>Importer le package Wall-E VR Asset dans votre projet Unity</li>
+                    <li>Connecter votre appareil RC (Arduino, ESP32, etc.) via USB/WiFi/Bluetooth</li>
+                    <li>Utiliser l'API fournie : <code>WallEController.SendCommand()</code> dans vos scripts C#</li>
+                    <li>Référencer la documentation complète pour exemples de code et configurations</li>
+                </ol>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Modal pour agrandissement d'images -->
+    <div id="imageModal" class="modal">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <script>
+        // Modal functionality for image zoom
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        const clickableImages = document.querySelectorAll('.clickable-image');
+        const closeModal = document.querySelector('.close-modal');
+
+        clickableImages.forEach(img => {
+            img.addEventListener('click', function() {
+                modal.style.display = 'block';
+                modalImg.src = this.src;
+            });
+        });
+
+        closeModal.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.content-section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>

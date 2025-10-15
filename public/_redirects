@@ -1,0 +1,16 @@
+# Redirections pour les pages principales
+/home /
+/accueil /
+
+# Redirections pour les anciennes URLs si nécessaire
+/portfolio /projets
+/about /
+
+# SPA fallback pour les routes dynamiques
+/*    /index.html   200
+
+# Redirections de sécurité
+/wp-admin/* https://google.com 301!
+/admin/* https://google.com 301!
+/.env 404
+/.git/* 404

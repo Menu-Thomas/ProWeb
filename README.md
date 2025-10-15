@@ -48,6 +48,47 @@ npm run dev
 ```
 Le site sera accessible sur [http://localhost:3000](http://localhost:3000)
 
+## 🌐 Déploiement sur Netlify
+
+### Configuration automatique
+Ce projet est préconfiguré pour Netlify avec :
+- ✅ Export statique Next.js configuré
+- ✅ Fichier `netlify.toml` avec paramètres de build
+- ✅ Headers de sécurité configurés
+- ✅ Redirections automatiques
+- ✅ Cache optimisé pour les assets
+
+### Étapes de déploiement
+
+#### Option 1: Via Git (Recommandé)
+1. Pousser votre code sur GitHub/GitLab/Bitbucket
+2. Connecter le repository à Netlify
+3. Netlify détectera automatiquement la configuration
+4. Le déploiement se lancera automatiquement
+
+#### Option 2: Drag & Drop
+1. Construire le projet localement :
+```bash
+npm run export
+```
+2. Uploader le dossier `out/` sur Netlify
+
+### Variables d'environnement (si nécessaire)
+Aucune variable d'environnement requise pour ce projet statique.
+
+### URL de déploiement
+Après déploiement, votre site sera accessible via :
+- URL temporaire : `https://nom-du-site.netlify.app`
+- Domaine personnalisé : Configurable dans les paramètres Netlify
+
+### Optimisations incluses
+- 🚀 Build statique optimisé
+- 📱 PWA-ready (Service Worker peut être ajouté)
+- 🔒 Headers de sécurité HTTPS
+- ⚡ Cache des assets configuré
+- 🤖 Robots.txt et sitemap.xml
+- 📊 SEO optimisé
+
 ### Build de production
 ```bash
 npm run build

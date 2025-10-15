@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VivaTech Medical App - Télémédecine 3D Eye-Tracking | Thomas Menu</title>
+    <meta name="description" content="Application médicale de téléconsultation 3D avec eye-tracking Leia. Partage d'organes 3D en temps réel pour consultations immersives. Développé chez EPICNPOC pour VivaTech.">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .project-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #3b82f6, #2563eb, #1d4ed8);
+        }
+
+        .project-title {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .project-subtitle {
+            font-size: 1.3rem;
+            color: #666;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        .company-badge {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 500;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        .content-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .content-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(29, 78, 216, 0.1));
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.2);
+        }
+
+        .feature-title {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .feature-description {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .tech-tag {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .objectives-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .objectives-list li {
+            padding: 12px 0;
+            padding-left: 30px;
+            position: relative;
+            color: #555;
+        }
+
+        .objectives-list li::before {
+            content: '🎯';
+            position: absolute;
+            left: 0;
+            top: 12px;
+        }
+
+        .methodology-steps {
+            counter-reset: step-counter;
+        }
+
+        .methodology-step {
+            counter-increment: step-counter;
+            margin-bottom: 20px;
+            padding-left: 50px;
+            position: relative;
+        }
+
+        .methodology-step::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .step-title {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 5px;
+        }
+
+        .challenges-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .challenge-item {
+            background: rgba(255, 193, 7, 0.1);
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .challenge-title {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 5px;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .result-card {
+            background: linear-gradient(135deg, rgba(40, 167, 69, 0.1), rgba(25, 135, 84, 0.1));
+            border-radius: 12px;
+            padding: 20px;
+            border-left: 4px solid #28a745;
+        }
+
+        .result-icon {
+            color: #28a745;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .result-title {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        /* Styles pour la galerie d'images */
+        .main-image-container {
+            margin-bottom: 30px;
+        }
+
+        .image-frame {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        .image-frame:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.2);
+        }
+
+        .main-project-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .project-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .image-placeholder-large {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(29, 78, 216, 0.1));
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            border: 2px dashed rgba(59, 130, 246, 0.3);
+        }
+
+        .image-placeholder-large h3 {
+            margin: 10px 0;
+            color: #1e293b;
+            font-size: 1.5rem;
+        }
+
+        .image-placeholder-small {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(29, 78, 216, 0.1));
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            border: 2px dashed rgba(59, 130, 246, 0.3);
+            font-size: 0.9rem;
+        }
+
+        .image-placeholder-small i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #3b82f6;
+        }
+
+        .images-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .image-item {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .image-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .image-caption {
+            padding: 15px;
+            background: white;
+            font-size: 0.95rem;
+            color: #555;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .main-image-container .image-caption {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            margin-top: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Modal pour agrandir les images */
+        .image-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            cursor: pointer;
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 90%;
+            max-width: 900px;
+            max-height: 80%;
+            object-fit: contain;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 10px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .close-modal:hover {
+            opacity: 0.7;
+        }
+
+        .back-button {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+            color: white;
+            text-decoration: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .project-header {
+                padding: 20px;
+            }
+
+            .project-title {
+                font-size: 2rem;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .content-section {
+                padding: 20px;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .images-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .main-project-image, .image-placeholder-large {
+                height: 250px;
+            }
+
+            .project-image, .image-placeholder-small {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../projets/" class="back-button">
+            <i class="fas fa-arrow-left"></i>
+            Retour aux projets
+        </a>
+
+        <div class="project-header">
+            <div style="margin-bottom: 20px;">
+                <img src="../images/images anciens portfolio/med1.jpg" alt="VivaTech Medical App" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid #3b82f6; box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);">
+            </div>
+            <h1 class="project-title">
+                VivaTech Medical App
+            </h1>
+            <p class="project-subtitle">
+                Application de téléconsultation médicale avec technologie 3D et eye-tracking
+            </p>
+            <span class="company-badge">
+                Projet réalisé lors du stage chez EPICNPOC pour VivaTech
+            </span>
+        </div>
+
+        <div class="content-grid">
+            <!-- Vue d'ensemble -->
+            <div class="content-section">
+                <h2 class="section-title">
+                    <div class="section-icon">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                    Vue d'ensemble du projet
+                </h2>
+                <p style="margin-bottom: 15px;">
+                    Le projet visait à développer une application innovante de téléconsultation médicale pour un écran 3D avec eye-tracking Leia. Cette solution permettait aux médecins de partager des visualisations d'organes en 3D avec leurs patients lors de consultations à distance, offrant une expérience interactive et immersive.
+                </p>
+                <p>
+                    <strong>Défi technique principal :</strong> Assurer la réception et l'affichage en temps réel d'objets 3D, de messages et de vidéos sans recompilation de l'application.
+                </p>
+            </div>
+
+            <!-- Objectifs -->
+            <div class="content-section">
+                <h2 class="section-title">
+                    <div class="section-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    Objectifs du projet
+                </h2>
+                <ul class="objectives-list">
+                    <li>Développer une application fonctionnant sur tablettes 3D Leia avec eye-tracking</li>
+                    <li>Créer plusieurs pages : affichage informations patient et visioconférence</li>
+                    <li>Permettre le partage de visualisations d'organes 3D pendant la consultation</li>
+                    <li>Assurer l'affichage en temps réel d'objets 3D sans recompilation</li>
+                    <li>Garantir une interaction fluide avec les éléments 3D via eye-tracking</li>
+                </ul>
+            </div>
+
+            <!-- Méthodologie -->
+            <div class="content-section">
+                <h2 class="section-title">
+                    <div class="section-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    Méthodologie de développement
+                </h2>
+                <div class="methodology-steps">
+                    <div class="methodology-step">
+                        <div class="step-title">Recherche et collecte des exigences</div>
+                        <p>Discussions régulières avec le superviseur et l'expert en design UI. Utilisation de Figma pour la conception des interfaces et intégration des spécifications du plugin Leia.</p>
+                    </div>
+                    <div class="methodology-step">
+                        <div class="step-title">Développement étape par étape</div>
+                        <p>Développement des fonctionnalités de visioconférence, intégration de la technologie eye-tracking, et implémentation de la réception en temps réel.</p>
+                    </div>
+                    <div class="methodology-step">
+                        <div class="step-title">Validation des spécifications</div>
+                        <p>Tests sur tablettes 3D Leia et tests finaux chez le client à Paris sur télévision 3D.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Technologies -->
+            <div class="content-section">
+                <h2 class="section-title">
+                    <div class="section-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    Technologies utilisées
+                </h2>
+                <div class="tech-tags">
+                    <span class="tech-tag">Leia 3D Display</span>
+                    <span class="tech-tag">Eye-tracking</span>
+                    <span class="tech-tag">WebRTC</span>
+                    <span class="tech-tag">Figma</span>
+                    <span class="tech-tag">Rendu 3D</span>
+                    <span class="tech-tag">Communication Temps Réel</span>
+                    <span class="tech-tag">JavaScript</span>
+                    <span class="tech-tag">HTML5</span>
+                </div>
+            </div>
+
+            <!-- Galerie d'images du projet -->
+            <div class="content-section">
+                <h2 class="section-title">
+                    <div class="section-icon">
+                        <i class="fas fa-images"></i>
+                    </div>
+                    Galerie du projet
+                </h2>
+                
+                <!-- Image principale -->
+                <div class="main-image-container">
+                    <div class="image-frame">
+                        <img src="../images/images anciens portfolio/med1.jpg" alt="VivaTech Medical App - Interface principale" class="main-project-image clickable-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="image-placeholder-large" style="display: none;">
+                            <i class="fas fa-heartbeat" style="font-size: 4rem; margin-bottom: 20px; color: #3b82f6;"></i>
+                            <h3>VivaTech Medical App</h3>
+                            <p>Application de téléconsultation 3D</p>
+                        </div>
+                    </div>
+                    <div class="image-caption">
+                        <strong>Interface principale de l'application médicale</strong> - Téléconsultation 3D avec eye-tracking Leia
+                    </div>
+                </div>
+
+                <!-- Grille d'images secondaires -->
+                <div class="images-grid">
+                    <div class="image-item">
+                        <div class="image-frame">
+                            <img src="../images/images anciens portfolio/med2.jpg" alt="Interface de visioconférence" class="project-image clickable-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="image-placeholder-small" style="display: none;">
+                                <i class="fas fa-video"></i>
+                                <span>Visioconférence</span>
+                            </div>
+                        </div>
+                        <div class="image-caption">Interface de visioconférence HD</div>
+                    </div>
+
+                    <div class="image-item">
+                        <div class="image-frame">
+                            <img src="../images/images anciens portfolio/med1.jpg" alt="Visualisation 3D d'organes" class="project-image clickable-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="image-placeholder-small" style="display: none;">
+                                <i class="fas fa-cube"></i>
+                                <span>Visualisation 3D</span>
+                            </div>
+                        </div>
+                        <div class="image-caption">Partage d'organes 3D en temps réel</div>
+                    </div>
+
+                    <div class="image-item">
+                        <div class="image-frame">
+                            <img src="../images/images anciens portfolio/med2.jpg" alt="Eye-tracking Leia" class="project-image clickable-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="image-placeholder-small" style="display: none;">
+                                <i class="fas fa-eye"></i>
+                                <span>Eye-tracking</span>
+                            </div>
+                        </div>
+                        <div class="image-caption">Technologie eye-tracking Leia intégrée</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fonctionnalités clés -->
+            <div class="content-section">
+                <h2 class="section-title">
+                    <div class="section-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    Fonctionnalités clés
+                </h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-title">
+                            <i class="fas fa-video" style="color: #3b82f6;"></i>
+                            Visioconférence HD
+                        </div>
+                        <p class="feature-description">
+                            Communication en temps réel entre médecin et patient avec qualité vidéo haute définition
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-title">
+                            <i class="fas fa-cube" style="color: #28a745;"></i>
+                            Partage 3D en temps réel
+                        </div>
+                        <p class="feature-description">
+                            Visualisation et manipulation d'organes 3D partagés instantanément sans recompilation
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-title">
+                            <i class="fas fa-eye" style="color: #2563eb;"></i>
+                            Eye-tracking Leia
+                        </div>
+                        <p class="feature-description">
+                            Interaction fluide avec les éléments 3D grâce à la technologie de suivi oculaire
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-title">
+                            <i class="fas fa-tablet-alt" style="color: #1d4ed8;"></i>
+                            Écran 3D Leia
+                        </div>
+                        <p class="feature-description">
+                            Application optimisée pour tablettes 3D Leia offrant une expérience immersive
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-title">
+                            <i class="fas fa-user-md" style="color: #475569;"></i>
+                            Interface patient
+                        </div>
+                        <p class="feature-description">
+                            Page dédiée affichant les informations patient de manière claire et accessible
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-title">
+                            <i class="fas fa-sync-alt" style="color: #334155;"></i>
+                            Temps réel
+                        </div>
+                        <p class="feature-description">
+                            Réception et affichage instantanés de messages, vidéos et objets 3D
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Défis techniques -->
+            <div class="content-section">
+                <h2 class="section-title">
+                    <div class="section-icon">
+                        <i class="fas fa-wrench"></i>
+                    </div>
+                    Défis techniques surmontés
+                </h2>
+                <div class="challenges-grid">
+                    <div class="challenge-item">
+                        <div class="challenge-title">Intégration Leia 3D</div>
+                        <p>Maîtrise du plugin Leia pour affichage 3D sans lunettes et eye-tracking</p>
+                    </div>
+                    <div class="challenge-item">
+                        <div class="challenge-title">Temps réel sans recompilation</div>
+                        <p>Système de chargement dynamique d'objets 3D sans nécessiter de rebuild</p>
+                    </div>
+                    <div class="challenge-item">
+                        <div class="challenge-title">Synchronisation vidéo</div>
+                        <p>Implémentation WebRTC pour visioconférence fluide et stable</p>
+                    </div>
+                    <div class="challenge-item">
+                        <div class="challenge-title">UX/UI médicale</div>
+                        <p>Design intuitif adapté au contexte médical et aux besoins des praticiens</p>
+                    </div>
+                    <div class="challenge-item">
+                        <div class="challenge-title">Performances 3D</div>
+                        <p>Optimisation du rendu 3D pour maintenir la fluidité sur tablette</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Résultats et impact -->
+            <div class="content-section">
+                <h2 class="section-title">
+                    <div class="section-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    Résultats et impact
+                </h2>
+                <div class="results-grid">
+                    <div class="result-card">
+                        <div class="result-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="result-title">Livraison réussie</div>
+                        <p>Application complète et fonctionnelle testée avec succès chez le client à Paris sur télévision 3D.</p>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-icon">
+                            <i class="fas fa-rocket"></i>
+                        </div>
+                        <div class="result-title">Innovation technologique</div>
+                        <p>Première application de télémédecine combinant 3D sans lunettes et eye-tracking pour EPICNPOC.</p>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-icon">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <div class="result-title">Impact médical</div>
+                        <p>Solution permettant des consultations plus immersives et pédagogiques pour les patients.</p>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-icon">
+                            <i class="fas fa-award"></i>
+                        </div>
+                        <div class="result-title">Présentation VivaTech</div>
+                        <p>Application destinée à être présentée au salon VivaTech, démontrant l'expertise d'EPICNPOC.</p>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="result-title">Compétences développées</div>
+                        <p>Maîtrise de technologies 3D avancées, WebRTC, eye-tracking, et design d'interfaces médicales.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Particularité -->
+            <div class="content-section">
+                <h2 class="section-title">
+                    <div class="section-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    Particularité du projet
+                </h2>
+                <p style="background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(29, 78, 216, 0.1)); padding: 20px; border-radius: 12px; border-left: 4px solid #3b82f6;">
+                    <strong>Développement autonome :</strong> Contrairement aux autres projets, cette application ne nécessitait pas de connexion au serveur d'EPICNPOC, permettant un développement plus autonome et une architecture simplifiée. L'application fonctionnait de manière indépendante sur les tablettes Leia 3D, facilitant les tests et la présentation client.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal pour agrandir les images -->
+    <div id="imageModal" class="image-modal">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <script>
+        // Animation d'apparition au scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Fonctionnalité de modal pour les images
+        function initImageModal() {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const closeBtn = document.querySelector('.close-modal');
+            
+            document.querySelectorAll('.clickable-image').forEach(img => {
+                img.style.cursor = 'pointer';
+                img.addEventListener('click', function() {
+                    modal.style.display = 'block';
+                    modalImg.src = this.src;
+                    modalImg.alt = this.alt;
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+
+            function closeModal() {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+
+            closeBtn.addEventListener('click', closeModal);
+            
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && modal.style.display === 'block') {
+                    closeModal();
+                }
+            });
+        }
+
+        // Indicateur de chargement pour les images
+        function addImageLoadingStates() {
+            document.querySelectorAll('img[src*="med"]').forEach(img => {
+                const placeholder = img.nextElementSibling;
+                
+                img.addEventListener('load', function() {
+                    this.style.display = 'block';
+                    if (placeholder) {
+                        placeholder.style.display = 'none';
+                    }
+                });
+
+                img.addEventListener('error', function() {
+                    this.style.display = 'none';
+                    if (placeholder) {
+                        placeholder.style.display = 'flex';
+                    }
+                });
+            });
+        }
+
+        // Appliquer l'animation à toutes les sections
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(20px)';
+                section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(section);
+            });
+
+            const header = document.querySelector('.project-header');
+            header.style.opacity = '0';
+            header.style.transform = 'translateY(-20px)';
+            header.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            
+            setTimeout(() => {
+                header.style.opacity = '1';
+                header.style.transform = 'translateY(0)';
+            }, 200);
+
+            initImageModal();
+            addImageLoadingStates();
+
+            const imageItems = document.querySelectorAll('.image-item');
+            imageItems.forEach((item, index) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(30px)';
+                item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                
+                setTimeout(() => {
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateY(0)';
+                }, 300 + (index * 100));
+            });
+        });
+    </script>
+</body>
+</html>

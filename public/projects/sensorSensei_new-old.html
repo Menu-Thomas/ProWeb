@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sensor Sensei - LoRa Extension</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../public/favicon-32x32.png">
+  <link rel="stylesheet" href="project-styles.css">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      text-align: center;
+      padding: 2rem 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    header h1 {
+      color: white;
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+    header p {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 1.1rem;
+      font-weight: 300;
+    }
+
+    .main-container {
+      flex: 1;
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: #4a90e2 rgba(255, 255, 255, 0.1);
+    }
+
+    .main-container::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .main-container::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+    }
+
+    .main-container::-webkit-scrollbar-thumb {
+      background: #4a90e2;
+      border-radius: 4px;
+      border: 2px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .main-container::-webkit-scrollbar-thumb:hover {
+      background: #357abd;
+    }
+
+    section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+      color: #333;
+    }
+
+    .project-overview {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 15px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      backdrop-filter: blur(10px);
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 15px;
+      padding: 1.5rem;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      margin: 1rem 0;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+    }
+
+    .card h3 {
+      color: #4a90e2;
+      margin-bottom: 1rem;
+      font-size: 1.3rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .icon {
+      font-size: 1.5rem;
+    }
+
+    .card p, .card li {
+      margin-bottom: 0.5rem;
+      color: #555;
+    }
+
+    .card ul, .card ol {
+      margin-left: 1rem;
+    }
+
+    .tech-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .tech-tag {
+      background: linear-gradient(135deg, #4a90e2, #357abd);
+      color: white;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    code {
+      background: #eceff1;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+      color: #333;
+    }
+
+    footer {
+      background-color: #783a4d;
+      color: white;
+      text-align: center;
+      padding: 1rem 0;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .content-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      
+      header h1 {
+        font-size: 2rem;
+      }
+      
+      section {
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+<header>
+  <a href="/projets" class="back-button">← Retour aux projets</a>
+  <h1>📡 Sensor Sensei</h1>
+  <p>LoRa Extension for Sensor.Community</p>
+</header>
+
+<div class="main-container">
+  <section>
+    <div class="project-overview">
+      <h1>📡 Sensor Sensei - LoRa Extension for Sensor.Community</h1>
+      <p><strong>An extension of the Sensor.Community project using LoRa communication to enable deployment of environmental sensors in areas without direct WiFi.</strong></p>
+    </div>
+
+    <div class="content-grid">
+      <!-- Introduction -->
+      <div class="card">
+        <h3><span class="icon">🌍</span> Project Concept</h3>
+        <p><strong>Sensor Sensei</strong> extends the <a href="https://sensor.community/en/" target="_blank">Sensor.Community</a> project by enabling LoRa communication between sensors and a central WiFi relay node.</p>
+        <p>This solution is ideal for deployments in remote or distributed environments where direct WiFi is not available for each sensor node.</p>
+      </div>
+
+      <!-- Technologies -->
+      <div class="card">
+        <h3><span class="icon">⚙️</span> Technologies Used</h3>
+        <div class="tech-stack">
+          <span class="tech-tag">ESP32</span>
+          <span class="tech-tag">LoRa 433MHz</span>
+          <span class="tech-tag">DHT11 Sensor</span>
+          <span class="tech-tag">C/C++</span>
+          <span class="tech-tag">HTTP API</span>
+          <span class="tech-tag">Sensor.Community</span>
+        </div>
+        <p style="margin-top: 1rem;">Distributed architecture with long-range communication and API integration.</p>
+      </div>
+
+      <!-- Features -->
+      <div class="card">
+        <h3><span class="icon">🚀</span> Key Features</h3>
+        <ul>
+          <li>Collection of <strong>temperature, humidity and sound levels</strong></li>
+          <li><strong>LoRa (433 MHz)</strong> long-range communication</li>
+          <li><strong>WiFi relay node</strong> for API transmission</li>
+          <li>Health checks via LoRa for reliability</li>
+          <li>Seamless integration with Sensor.Community</li>
+        </ul>
+      </div>
+
+      <!-- Architecture -->
+      <div class="card">
+        <h3><span class="icon">🔧</span> Technical Architecture</h3>
+        <ul>
+          <li><strong>Client Sensors:</strong> ESP32 + DHT11 + LoRa</li>
+          <li><strong>Relay Server:</strong> ESP32 + WiFi + LoRa</li>
+          <li><strong>Communication:</strong> LoRa 433MHz protocol</li>
+          <li><strong>API:</strong> HTTP POST to Sensor.Community</li>
+          <li><strong>Monitoring:</strong> Automatic health checks</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Methodology -->
+    <div class="card">
+      <h3><span class="icon">🔄</span> Development Methodology</h3>
+      <div class="content-grid">
+        <div>
+          <h4>Development Phases</h4>
+          <ol>
+            <li><strong>Hardware Setup:</strong> Dual ESP32 configuration</li>
+            <li><strong>LoRa Protocol:</strong> Communication development</li>
+            <li><strong>Data Collection:</strong> Sensor integration</li>
+            <li><strong>API Integration:</strong> Sensor.Community</li>
+            <li><strong>Field Testing:</strong> Reliability validation</li>
+          </ol>
+        </div>
+        <div>
+          <h4>Technical Challenges</h4>
+          <ul>
+            <li>Energy consumption optimization</li>
+            <li>LoRa transmission reliability</li>
+            <li>Network error handling</li>
+            <li>Data synchronization</li>
+            <li>Range and terrain obstacles</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results and Impact -->
+    <div class="card">
+      <h3><span class="icon">🏆</span> Results and Applications</h3>
+      <div class="content-grid">
+        <div>
+          <h4>System Performance</h4>
+          <ul>
+            <li>LoRa range: up to 2km in open area</li>
+            <li>Battery life: several months</li>
+            <li>Transmission reliability: > 95%</li>
+            <li>Seamless API integration</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Practical Applications</h4>
+          <ul>
+            <li>Rural environmental monitoring</li>
+            <li>Distributed urban deployments</li>
+            <li>Remote air quality monitoring</li>
+            <li>Autonomous sensor networks</li>
+          </ul>
+        </div>
+      </div>
+      <p><strong>Impact:</strong> This project demonstrates the successful extension of an existing community sensor network, enabling deployments in previously inaccessible areas and contributing to global environmental monitoring.</p>
+    </div>
+
+    <!-- Future Developments -->
+    <div class="card">
+      <h3><span class="icon">🔮</span> Future Developments and Improvements</h3>
+      <div class="content-grid">
+        <div>
+          <h4>Technical Extensions</h4>
+          <ul>
+            <li>LoRaWAN support for larger scale</li>
+            <li>Solar panel integration</li>
+            <li>Additional sensors (PM2.5, CO2)</li>
+            <li>Data encryption</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Advanced Features</h4>
+          <ul>
+            <li>Web configuration interface</li>
+            <li>Real-time alerts</li>
+            <li>Analytics and trends</li>
+            <li>Automatic geolocation</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <p>Project realized by Thomas Menu — IoT & Environmental Monitoring</p>
+</footer>
+
+</body>
+</html>

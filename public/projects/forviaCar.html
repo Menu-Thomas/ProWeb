@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Replica - Simulateur Automobile Professionnel | Thomas Menu</title>
+    <meta name="description" content="Virtual Replica : Simulateur automobile réaliste avec cockpit interactif développé pour EPICNPOC. Intégration GPS, contrôles Logitech, et interface GUI avancée.">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .project-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #3b82f6, #2563eb, #1d4ed8);
+        }
+
+        .project-title {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .forvia-brand {
+            background: linear-gradient(135deg, #ff6b35, #f7931e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+
+        .project-subtitle {
+            font-size: 1.3rem;
+            color: #666;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        .company-badge {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 500;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        .content-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .content-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .feature-card {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(29, 78, 216, 0.1));
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.2);
+        }
+
+        .feature-title {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .feature-description {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .tech-tag {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .objectives-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .objectives-list li {
+            padding: 12px 0;
+            padding-left: 30px;
+            position: relative;
+            color: #555;
+        }
+
+        .objectives-list li::before {
+            content: '🎯';
+            position: absolute;
+            left: 0;
+            top: 12px;
+        }
+
+        .methodology-steps {
+            counter-reset: step-counter;
+        }
+
+        .methodology-step {
+            counter-increment: step-counter;
+            margin-bottom: 20px;
+            padding-left: 50px;
+            position: relative;
+        }
+
+        .methodology-step::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .step-title {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 5px;
+        }
+
+        .challenges-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .challenge-item {
+            background: rgba(255, 193, 7, 0.1);
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .challenge-title {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 5px;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .result-card {
+            background: linear-gradient(135deg, rgba(40, 167, 69, 0.1), rgba(25, 135, 84, 0.1));
+            border-radius: 12px;
+            padding: 20px;
+            border-left: 4px solid #28a745;
+        }
+
+        .result-icon {
+            color: #28a745;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .result-title {
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .image-placeholder {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(29, 78, 216, 0.1));
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            color: #666;
+            border: 2px dashed rgba(59, 130, 246, 0.3);
+            margin: 20px 0;
+        }
+
+        .back-button {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            text-decoration: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(59, 130, 246, 0.3);
+            color: white;
+            text-decoration: none;
+        }
+
+        /* Styles pour la galerie d'images */
+        .main-image-container {
+            margin-bottom: 30px;
+        }
+
+        .image-frame {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        .image-frame:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.2);
+        }
+
+        .main-project-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .project-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .image-placeholder-large {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(29, 78, 216, 0.1));
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            border: 2px dashed rgba(59, 130, 246, 0.3);
+        }
+
+        .image-placeholder-large h3 {
+            margin: 10px 0;
+            color: #1e293b;
+            font-size: 1.5rem;
+        }
+
+        .image-placeholder-small {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(29, 78, 216, 0.1));
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            border: 2px dashed rgba(59, 130, 246, 0.3);
+            font-size: 0.9rem;
+        }
+
+        .image-placeholder-small i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #3b82f6;
+        }
+
+        .images-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .image-item {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .image-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .image-caption {
+            padding: 15px;
+            background: white;
+            font-size: 0.95rem;
+            color: #555;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .main-image-container .image-caption {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            margin-top: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Modal pour agrandir les images */
+        .image-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            cursor: pointer;
+        }
+
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 90%;
+            max-width: 900px;
+            max-height: 80%;
+            object-fit: contain;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border-radius: 10px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 35px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1001;
+        }
+
+        .close-modal:hover {
+            opacity: 0.7;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .project-header {
+                padding: 20px;
+            }
+
+            .project-title {
+                font-size: 2rem;
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .content-section {
+                padding: 20px;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .images-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .main-project-image, .image-placeholder-large {
+                height: 250px;
+            }
+
+            .project-image, .image-placeholder-small {
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="../projets/" class="back-button">
+            <i class="fas fa-arrow-left"></i>
+            Retour aux projets
+        </a>
+
+        <div class="project-header">
+            <div style="margin-bottom: 20px;">
+                <img src="../images/images anciens portfolio/for1.jpg" alt="FORVIA Car Project" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 4px solid #ff6b35; box-shadow: 0 10px 30px rgba(255, 107, 53, 0.3);">
+            </div>
+            <h1 class="project-title">
+                <span class="forvia-brand">FORVIA</span> Car Project
+            </h1>
+            <p class="project-subtitle">
+                Cockpit automobile interactif avec GUI et sièges mobiles - CES 2023
+            </p>
+            <span class="company-badge">
+                Projet réalisé chez EPICNPOC pour le client FORVIA
+            </span>
+            
+            <div class="video-badge" style="background: linear-gradient(135deg, #ff6b35, #f7931e); color: white; padding: 15px 25px; border-radius: 12px; margin: 20px 0; text-align: center;">
+                <a href="https://www.youtube.com/watch?v=I0cuEdVqjuo&t=150s" target="_blank" style="color: white; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 10px;">
+                    <i class="fab fa-youtube"></i>
+                    Regarder la démonstration live au CES 2023
+                </a>
+            </div>
+        </div>
+
+        <div class="content-grid">
+            <!-- Vue d'ensemble -->
+            <div class="content-section">
+                <h2 class="section-title">
+                    <div class="section-icon">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                    Vue d'ensemble du projet
+                </h2>
+                <p style="margin-bottom: 15px;">
+                    L'objectif principal était de développer un cockpit de voiture interactif équipé d'interfaces graphiques utilisateur (GUI) développées par <strong>EPICNPOC</strong>, avec des sièges capables de se déplacer selon plusieurs scénarios. L'ensemble devait être contrôlable depuis le serveur de l'entreprise. Ce projet était destiné à être présenté au <strong>CES 2023</strong> sur le stand du prototype "Lights" du client <strong>FORVIA</strong>.
+                </p>
+                <p>
+                    <strong>Événement majeur :</strong> Présentation réussie au CES 2023, démontrant l'innovation d'EPICNPOC et sa capacité à répondre aux besoins spécifiques de ses clients du secteur automobile.
+                </p>
+            </div>
+
+            <!-- Objectifs -->
+            <div class="content-section">
+                <h2 class="section-title">
+                    <div class="section-icon">
+                        <i class="fas fa-bullseye"></i>
+                    </div>
+                    Objectifs du projet
+                </h2>
+                <ul class="objectives-list">
+                    <li>Créer une réplique virtuelle du cockpit automobile équipé des GUI de l'entreprise</li>
+                    <li>Intégrer des sièges interactifs capables de se déplacer selon plusieurs scénarios prédéfinis</li>
+                    <li>Assurer que l'ensemble du système soit contrôlable depuis le serveur de l'entreprise</li>
+                    <li>Préparer une démonstration spectaculaire pour le CES 2023</li>
+                    <li>Mettre en valeur les capacités d'EPICNPOC dans le secteur automobile</li>
+                </ul>
+            </div>
+
+            <!-- Méthodologie -->
+            <div class="content-section">
+                <h2 class="section-title">
+                    <div class="section-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    Méthodologie de développement
+                </h2>
+                <div class="methodology-steps">
+                    <div class="methodology-step">
+                        <div class="step-title">Recherche et collecte des exigences</div>
+                        <p>Discussions avec le superviseur et l'équipe projet pour comprendre les besoins spécifiques de FORVIA. Définition des spécifications techniques et fonctionnelles.</p>
+                    </div>
+                    <div class="methodology-step">
+                        <div class="step-title">Développement étape par étape</div>
+                        <p>Développement initial du cockpit interactif avec modèles 3D fournis par le client. Intégration des GUI EPICNPOC et développement des scénarios de mouvement des sièges.</p>
+                    </div>
+                    <div class="methodology-step">
+                        <div class="step-title">Validation des spécifications</div>
+                        <p>Tests réguliers avec le serveur EPICNPOC, ajustements basés sur les retours, et préparation finale pour le CES 2023.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Technologies -->
+            <div class="content-section">
+                <h2 class="section-title">
+                    <div class="section-icon">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    Technologies utilisées
+                </h2>
+                <div class="tech-tags">
+                    <span class="tech-tag">Unity 3D</span>
+                    <span class="tech-tag">C# Scripting</span>
+                    <span class="tech-tag">JSON Communication</span>
+                    <span class="tech-tag">Serveur EPICNPOC</span>
+                    <span class="tech-tag">Modélisation 3D</span>
+                    <span class="tech-tag">GUI Integration</span>
+                    <span class="tech-tag">Animation Système</span>
+                    <span class="tech-tag">Contrôle Réseau</span>
+                </div>
+            </div>
+
+            <!-- Galerie d'images du projet -->
+            <div class="content-section">
+                <h2 class="section-title">
+                    <div class="section-icon">
+                        <i class="fas fa-images"></i>
+                    </div>
+                    Galerie du projet
+                </h2>
+                
+                <!-- Image principale -->
+                <div class="main-image-container">
+                    <div class="image-frame">
+                        <img src="../images/images anciens portfolio/for1.jpg" alt="FORVIA Car - Cockpit interactif" class="main-project-image clickable-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="image-placeholder-large" style="display: none;">
+                            <i class="fas fa-car" style="font-size: 4rem; margin-bottom: 20px; color: #3b82f6;"></i>
+                            <h3>FORVIA Car - Vue principale</h3>
+                            <p>Cockpit interactif avec GUI EPICNPOC</p>
+                        </div>
+                    </div>
+                    <div class="image-caption">
+                        <strong>Cockpit interactif FORVIA au CES 2023</strong> - Interface 3D avec GUI intégrées et sièges mobiles
+                    </div>
+                </div>
+
+                <!-- Grille d'images secondaires -->
+                <div class="images-grid">
+                    <div class="image-item">
+                        <div class="image-frame">
+                            <img src="../images/images anciens portfolio/for2.jpg" alt="Interface GUI" class="project-image clickable-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="image-placeholder-small" style="display: none;">
+                                <i class="fas fa-desktop"></i>
+                                <span>Interface GUI</span>
+                            </div>
+                        </div>
+                        <div class="image-caption">Interfaces graphiques EPICNPOC intégrées</div>
+                    </div>
+
+                    <div class="image-item">
+                        <div class="image-frame">
+                            <img src="../images/images anciens portfolio/for3.jpg" alt="Système de sièges" class="project-image clickable-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="image-placeholder-small" style="display: none;">
+                                <i class="fas fa-chair"></i>
+                                <span>Sièges mobiles</span>
+                            </div>
+                        </div>
+                        <div class="image-caption">Système de sièges mobiles selon scénarios</div>
+                    </div>
+
+                    <div class="image-item">
+                        <div class="image-frame">
+                            <img src="../images/images anciens portfolio/for1.jpg" alt="Présentation CES 2023" class="project-image clickable-image" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="image-placeholder-small" style="display: none;">
+                                <i class="fas fa-tv"></i>
+                                <span>CES 2023</span>
+                            </div>
+                        </div>
+                        <div class="image-caption">Présentation au CES 2023</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fonctionnalités clés -->
+            <div class="content-section">
+                <h2 class="section-title">
+                    <div class="section-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    Fonctionnalités clés
+                </h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-title">
+                            <i class="fas fa-car" style="color: #ff6b35;"></i>
+                            Cockpit virtuel FORVIA
+                        </div>
+                        <p class="feature-description">
+                            Réplique virtuelle haute fidélité du cockpit automobile équipé des GUI propriétaires de l'entreprise
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-title">
+                            <i class="fas fa-chair" style="color: #ff6b35;"></i>
+                            Sièges interactifs mobiles
+                        </div>
+                        <p class="feature-description">
+                            Sièges capables de se déplacer selon plusieurs scénarios prédéfinis pour simulation immersive
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-title">
+                            <i class="fas fa-server" style="color: #ff6b35;"></i>
+                            Contrôle serveur centralisé
+                        </div>
+                        <p class="feature-description">
+                            Système entièrement contrôlable à distance depuis le serveur EPICNPOC
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-title">
+                            <i class="fas fa-desktop" style="color: #ff6b35;"></i>
+                            GUI EPICNPOC intégrées
+                        </div>
+                        <p class="feature-description">
+                            Interfaces graphiques de l'entreprise parfaitement intégrées au cockpit virtuel
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-title">
+                            <i class="fas fa-paint-brush" style="color: #ff6b35;"></i>
+                            Graphismes haute qualité
+                        </div>
+                        <p class="feature-description">
+                            Shaders personnalisés et système d'éclairage professionnel digne d'un salon automobile
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-title">
+                            <i class="fas fa-presentation" style="color: #ff6b35;"></i>
+                            Optimisé CES 2023
+                        </div>
+                        <p class="feature-description">
+                            Préparation spectaculaire pour démonstration au CES 2023 à Las Vegas
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Défis techniques -->
+            <div class="content-section">
+                <h2 class="section-title">
+                    <div class="section-icon">
+                        <i class="fas fa-wrench"></i>
+                    </div>
+                    Défis techniques surmontés
+                </h2>
+                <div class="challenges-grid">
+                    <div class="challenge-item">
+                        <div class="challenge-title">Modélisation 3D cockpit</div>
+                        <p>Création d'une réplique virtuelle fidèle du cockpit automobile FORVIA avec tous les détails</p>
+                    </div>
+                    <div class="challenge-item">
+                        <div class="challenge-title">Intégration GUI client</div>
+                        <p>Incorporation transparente des interfaces graphiques propriétaires d'EPICNPOC dans l'environnement 3D</p>
+                    </div>
+                    <div class="challenge-item">
+                        <div class="challenge-title">Système de sièges mobiles</div>
+                        <p>Développement de scénarios de mouvement synchronisés pour sièges interactifs</p>
+                    </div>
+                    <div class="challenge-item">
+                        <div class="challenge-title">Shaders et éclairage</div>
+                        <p>Création de shaders personnalisés et système d'éclairage professionnel pour rendu visuel premium</p>
+                    </div>
+                    <div class="challenge-item">
+                        <div class="challenge-title">Contrôle serveur distant</div>
+                        <p>Architecture réseau robuste permettant contrôle complet depuis serveur EPICNPOC</p>
+                    </div>
+                    <div class="challenge-item">
+                        <div class="challenge-title">Optimisation salon</div>
+                        <p>Performance graphique maximale pour présentation spectaculaire au CES 2023</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contexte de développement -->
+            <div class="content-section">
+                <h2 class="section-title">
+                    <div class="section-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    Contexte de développement
+                </h2>
+                <p style="margin-bottom: 15px;">
+                    <strong>Travail réalisé dans le cadre des services de prototypage EPICNPOC pour FORVIA :</strong>
+                </p>
+                <ul style="list-style-type: none; padding-left: 0;">
+                    <li style="margin-bottom: 10px;">🎯 <strong>Objectif CES 2023 :</strong> Créer une démonstration spectaculaire pour le salon Consumer Electronics Show à Las Vegas</li>
+                    <li style="margin-bottom: 10px;">🏢 <strong>Client prestigieux :</strong> FORVIA (via EPICNPOC), leader mondial de l'équipement automobile</li>
+                    <li style="margin-bottom: 10px;">🎨 <strong>Excellence visuelle :</strong> Shaders et éclairage professionnels pour graphismes dignes d'un salon automobile</li>
+                    <li style="margin-bottom: 10px;">💡 <strong>Innovation :</strong> Mettre en valeur les capacités d'EPICNPOC dans le secteur automobile avec cockpit interactif complet</li>
+                </ul>
+            </div>
+
+            <!-- Méthodologie de développement -->
+            <div class="content-section">
+                <h2 class="section-title">
+                    <div class="section-icon">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    Méthodologie de développement
+                </h2>
+                <div class="specs-grid">
+                    <div class="spec-card">
+                        <h4><i class="fas fa-comments" style="color: #ff6b35;"></i> Recherche & Exigences</h4>
+                        <p>Discussions avec superviseur et équipe projet pour comprendre besoins spécifiques FORVIA. Définition des spécifications techniques et fonctionnelles.</p>
+                    </div>
+                    <div class="spec-card">
+                        <h4><i class="fas fa-cube" style="color: #ff6b35;"></i> Développement cockpit 3D</h4>
+                        <p>Développement initial avec modèles 3D fournis par client. Modélisation, shaders et système d'éclairage haute qualité.</p>
+                    </div>
+                    <div class="spec-card">
+                        <h4><i class="fas fa-desktop" style="color: #ff6b35;"></i> Intégration GUI</h4>
+                        <p>Intégration des interfaces graphiques EPICNPOC dans le cockpit virtuel avec affichage fluide.</p>
+                    </div>
+                    <div class="spec-card">
+                        <h4><i class="fas fa-chair" style="color: #ff6b35;"></i> Scénarios sièges</h4>
+                        <p>Développement des scénarios de mouvement pour sièges interactifs avec synchronisation précise.</p>
+                    </div>
+                    <div class="spec-card">
+                        <h4><i class="fas fa-vial" style="color: #ff6b35;"></i> Tests & Validation</h4>
+                        <p>Tests réguliers avec serveur EPICNPOC, ajustements basés sur retours client.</p>
+                    </div>
+                    <div class="spec-card">
+                        <h4><i class="fas fa-rocket" style="color: #ff6b35;"></i> Préparation CES</h4>
+                        <p>Préparation finale et optimisation pour démonstration spectaculaire au CES 2023.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Résultats et impact -->
+            <div class="content-section">
+                <h2 class="section-title">
+                    <div class="section-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    Résultats et impact
+                </h2>
+                <div class="results-grid">
+                    <div class="result-card">
+                        <div class="result-icon">
+                            <i class="fas fa-check-circle"></i>
+                        </div>
+                        <div class="result-title">Démo CES 2023 réussie</div>
+                        <p>Présentation spectaculaire du cockpit interactif FORVIA au Consumer Electronics Show 2023 à Las Vegas.</p>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-icon">
+                            <i class="fas fa-paint-brush"></i>
+                        </div>
+                        <div class="result-title">Excellence graphique</div>
+                        <p>Shaders personnalisés et éclairage professionnel créant un rendu visuel de qualité salon automobile.</p>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-icon">
+                            <i class="fas fa-chair"></i>
+                        </div>
+                        <div class="result-title">Sièges mobiles fonctionnels</div>
+                        <p>Système de sièges interactifs avec scénarios de mouvement parfaitement synchronisés pour immersion totale.</p>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-icon">
+                            <i class="fas fa-server"></i>
+                        </div>
+                        <div class="result-title">Contrôle serveur intégré</div>
+                        <p>Architecture permettant contrôle complet du cockpit depuis serveur EPICNPOC avec latence minimale.</p>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="result-title">Valorisation EPICNPOC</div>
+                        <p>Mise en valeur réussie des capacités d'EPICNPOC dans le secteur automobile auprès de FORVIA et visiteurs du CES.</p>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="result-title">Compétences développées</div>
+                        <p>Modélisation 3D avancée, shaders Unity, systèmes d'éclairage, intégration GUI, contrôle réseau, et optimisation pour salons professionnels.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal pour agrandir les images -->
+    <div id="imageModal" class="image-modal">
+        <span class="close-modal">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <script>
+        // Animation d'apparition au scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Fonctionnalité de modal pour les images
+        function initImageModal() {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImage');
+            const closeBtn = document.querySelector('.close-modal');
+            
+            // Ajouter des écouteurs d'événements à toutes les images cliquables
+            document.querySelectorAll('.clickable-image').forEach(img => {
+                img.style.cursor = 'pointer';
+                img.addEventListener('click', function() {
+                    modal.style.display = 'block';
+                    modalImg.src = this.src;
+                    modalImg.alt = this.alt;
+                    document.body.style.overflow = 'hidden'; // Empêcher le scroll
+                });
+            });
+
+            // Fermer le modal
+            function closeModal() {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto'; // Réactiver le scroll
+            }
+
+            closeBtn.addEventListener('click', closeModal);
+            
+            // Fermer en cliquant en dehors de l'image
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            // Fermer avec la touche Escape
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && modal.style.display === 'block') {
+                    closeModal();
+                }
+            });
+        }
+
+        // Indicateur de chargement pour les images
+        function addImageLoadingStates() {
+            document.querySelectorAll('img[src*="virtual"]').forEach(img => {
+                const placeholder = img.nextElementSibling;
+                
+                img.addEventListener('load', function() {
+                    this.style.display = 'block';
+                    if (placeholder) {
+                        placeholder.style.display = 'none';
+                    }
+                });
+
+                img.addEventListener('error', function() {
+                    this.style.display = 'none';
+                    if (placeholder) {
+                        placeholder.style.display = 'flex';
+                        // Ajouter une info sur l'emplacement des images
+                        const infoText = placeholder.querySelector('p:last-child');
+                        if (!infoText && placeholder.classList.contains('image-placeholder-large')) {
+                            const info = document.createElement('p');
+                            info.style.cssText = 'margin-top: 15px; font-size: 0.85rem; background: rgba(59, 130, 246, 0.1); padding: 10px; border-radius: 8px; max-width: 300px;';
+                            info.innerHTML = '📁 Placez vos images dans: <code style="background: rgba(0,0,0,0.1); padding: 2px 6px; border-radius: 4px;">public/images/images anciens portfolio/virtual-replica/</code>';
+                            placeholder.appendChild(info);
+                        }
+                    }
+                });
+            });
+        }
+
+        // Appliquer l'animation à toutes les sections
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                section.style.opacity = '0';
+                section.style.transform = 'translateY(20px)';
+                section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(section);
+            });
+
+            // Animation du header
+            const header = document.querySelector('.project-header');
+            header.style.opacity = '0';
+            header.style.transform = 'translateY(-20px)';
+            header.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+            
+            setTimeout(() => {
+                header.style.opacity = '1';
+                header.style.transform = 'translateY(0)';
+            }, 200);
+
+            // Initialiser les fonctionnalités d'images
+            initImageModal();
+            addImageLoadingStates();
+
+            // Animation staggered pour la grille d'images
+            const imageItems = document.querySelectorAll('.image-item');
+            imageItems.forEach((item, index) => {
+                item.style.opacity = '0';
+                item.style.transform = 'translateY(30px)';
+                item.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                
+                setTimeout(() => {
+                    item.style.opacity = '1';
+                    item.style.transform = 'translateY(0)';
+                }, 300 + (index * 100));
+            });
+        });
+    </script>
+</body>
+</html>
