@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import Script from 'next/script'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -19,6 +20,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr">
+      {/* Umami Analytics */}
+      <Script
+        src="https://cloud.umami.is/script.js"
+        data-website-id="8d7ee044-9f5f-4407-91e6-38a6d4e4539f"
+        strategy="afterInteractive"
+        defer
+      />
       <body className={inter.className}>
         <Header />
         <main className="min-h-screen">
