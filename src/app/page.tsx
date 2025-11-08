@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { ArrowRight, Cpu, Globe, Lightbulb, Users } from 'lucide-react';
+import ProjectCarousel from '@/components/ProjectCarousel';
 
 export default function Home() {
   return (
@@ -23,6 +24,31 @@ export default function Home() {
                 Nous contacter
               </Link>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Projects Carousel */}
+      <section className="section-padding">
+        <div className="container-custom">
+          <div className="mb-12 flex items-end justify-between">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold text-secondary-900 mb-2">Projets récents</h2>
+              <p className="text-secondary-600 text-lg">Quelques réalisations en IoT, web, mobile et Unity</p>
+            </div>
+            <Link href="/projets" className="hidden sm:inline-flex items-center text-primary-700 font-semibold hover:text-primary-800">
+              Voir tout
+              <ArrowRight className="ml-2" size={18} />
+            </Link>
+          </div>
+
+          <ProjectCarousel />
+
+          <div className="sm:hidden mt-6 text-right">
+            <Link href="/projets" className="inline-flex items-center text-primary-700 font-semibold hover:text-primary-800">
+              Voir tout
+              <ArrowRight className="ml-2" size={18} />
+            </Link>
           </div>
         </div>
       </section>
