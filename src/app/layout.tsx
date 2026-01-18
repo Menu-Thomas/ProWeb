@@ -20,13 +20,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr">
-      {/* Umami Analytics */}
-      <Script
-        src="https://cloud.umami.is/script.js"
-        data-website-id="8d7ee044-9f5f-4407-91e6-38a6d4e4539f"
-        strategy="afterInteractive"
-        defer
-      />
+      <head>
+        {/* Umami Analytics - load in <head> */}
+        <Script
+          src="https://cloud.umami.is/script.js"
+          data-website-id="b9e8b1ac-6ab6-4dbc-b619-3b83942bdf7a"
+          strategy="beforeInteractive"
+        />
+      </head>
       <body className={inter.className}>
         <Header />
         <main className="min-h-screen">
